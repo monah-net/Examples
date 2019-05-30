@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Modulus {
+public class Modulus10 {
     public static void main(String[] args) throws IOException {
         String filename = "/Users/MacbookPro/Desktop/WORK/Input_code_files/Tax_Reference_numbers_07032018";
         FileReader fileReader = new FileReader(filename);
