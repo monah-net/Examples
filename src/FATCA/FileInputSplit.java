@@ -15,11 +15,7 @@ public class FileInputSplit {
         List<String> list = new ArrayList<>();
         String text;
         while ((text = reader.readLine()) != null){
-            list.add(text);
-        }
-        System.out.println(list.get(0));
-        List<String> list2 = new ArrayList<>();
-        list2 = Arrays.asList(list.get(0).split("\\s+"));
-        System.out.println(list2);
+            list.addAll(Arrays.asList(text.split("\\s+")));        }
+        System.out.println(list);
     }
 }
