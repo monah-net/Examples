@@ -1,13 +1,8 @@
 package FATCA;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.TreeSet;
 
     class TestingValuesElSub {
@@ -19,7 +14,7 @@ import java.util.TreeSet;
             String line;
             TreeSet<String> lines = new TreeSet<>();
             while ((line = reader.readLine()) != null) {
-                if (line.matches(".*<crs:IN.*") || (line.matches(".*<crs:TIN.*"))) {
+                if (line.contains("<crs:IN") || (line.contains("<crs:TIN"))) {
                     String temp = line.substring(line.indexOf(">") + 1, line.indexOf("</"));
                     lines.add(temp.trim());
                 }
@@ -31,13 +26,13 @@ import java.util.TreeSet;
             String line_code;
             TreeSet<String> lines_code = new TreeSet<>();
             while ((line = reader2.readLine()) != null) {
-                String temp = line.replaceAll("\t", "").replaceAll("\n", "").trim();
+                String temp = line.replaceAll("[\n\t]", "").trim();
                 if (temp.length() > 0) {
                     lines_code.add(temp);
                 }
             }
             reader2.close();
-            TreeSet < String > result_pos = new TreeSet<>();
+            TreeSet<String> result_pos = new TreeSet<>();
             TreeSet<String> result_neg = new TreeSet<>();
 
             for (String s1 : lines_code
