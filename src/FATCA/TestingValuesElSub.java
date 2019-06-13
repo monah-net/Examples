@@ -38,12 +38,11 @@ import java.util.TreeSet;
             for (String s1 : lines_code
             ) {
                 int counter = 0;
-                m:
                 for (String s2 : lines
                 ) {
                     if (s2.equals(s1)) {
                         counter++;
-                        break m;
+                        break;
                     }
                 }
                 if (counter > 0)
