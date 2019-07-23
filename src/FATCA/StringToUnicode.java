@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 public class StringToUnicode {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String original = "my simple text";
+        String original = "   ";
         char[] characters = original.toCharArray();
         for (int i = 0; i < characters.length ; i++) {
             char c = characters[i];
