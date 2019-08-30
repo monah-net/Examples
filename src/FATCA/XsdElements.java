@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 
 public class XsdElements {
     public static void main(String args[]) {
-         Map <String,String> map = new HashMap<>();
+        Map <String,String> map = new HashMap<>();
         String fileName = "/Users/MacbookPro/Desktop/TEMP/DJPDomestikBaruVERSI_1_0.xsd";
         String highLevelElem = "xs:simpleType";
         String elemName = "xs:enumeration";

@@ -8,8 +8,8 @@ import java.util.*;
 
 public class TwoListsStringByString {
     public static void main(String[] args) throws IOException {
-        String file1 = "/Users/MacbookPro/Desktop/Submissions_testing/1340FATCA/GB_11111113112019061818320000_DETAILED_TEST.xml";
-        String file2 = "/Users/MacbookPro/Desktop/Submissions_testing/1340FATCA/GB_DET_UNIT_Tests.xml";
+        String file1 = "/Users/olegsolodovnikov/Documents/MyDocuments/FATCA/Submissions/tempResults_Expr_PostGres.txt";
+        String file2 = "/Users/olegsolodovnikov/Documents/MyDocuments/FATCA/Submissions/tempResults_Expr_MSSQL.txt";
         FileReader fileReader = new FileReader(file1);
         FileReader fileReader2 = new FileReader(file2);
         BufferedReader reader = new BufferedReader(fileReader);
