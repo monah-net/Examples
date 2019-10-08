@@ -8,14 +8,15 @@ import java.util.Map;
 
 public class Modulus10 {
     public static void main(String[] args) throws IOException {
-        String filename = "/Users/MacbookPro/Desktop/WORK/Input_code_files/Tax_Reference_numbers_07032018";
+        String filename = "/Users/olegsolodovnikov/Desktop/CodesForModulus10.xml";
         FileReader fileReader = new FileReader(filename);
         BufferedReader reader = new BufferedReader(fileReader);
         List<String> list = new ArrayList<>();
         Map <String,String> map = new HashMap<>();
         int listCount = 0;
-        while (reader.readLine() != null){
-            list.add(reader.readLine());
+        String text;
+        while ((text = reader.readLine()) != null){
+            list.add(text);
             listCount ++;
         }
         int mapCount = 0;
@@ -28,7 +29,7 @@ public class Modulus10 {
         //System.out.println(listCount);
         //System.out.println(mapCount);
         //System.out.println(map);
-        try ( PrintWriter writer = new PrintWriter(new File(filename + "_output")) ) {
+        try ( PrintWriter writer = new PrintWriter(new File(filename.replaceAll(".xml","_output.xml"))) ) {
             for ( Map.Entry<String, String> entry : map.entrySet() ) {
                 writer.write(entry.getKey() + ": " + entry.getValue() + "\n");
             }
@@ -67,7 +68,7 @@ public class Modulus10 {
         if (result % 10 == 0) {
             resultM = "VALID";
         } else {
-            resultM = "Not Valid";
+            resultM = "Non-Valid";
         }
         return resultM;
     }
