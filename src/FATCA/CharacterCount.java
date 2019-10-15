@@ -8,7 +8,10 @@ import java.util.Map;
 
 public class CharacterCount {
     public static void main(String[] args) throws IOException {
-        FileReader fileReader = new FileReader("/Users/olegsolodovnikov/Desktop/AEOIFATCA_ZA/submissions/FTI_2__S04120191011T123751FewEntitites_20191011123751.txt");
+        charCount("/Users/olegsolodovnikov/Desktop/AEOIFATCA_ZA/submissions/FTI_2__S037FewEntitites_20191011181454.txt");
+    }
+    public static void charCount(String fileName) throws IOException {
+        FileReader fileReader = new FileReader(fileName);
         BufferedReader reader = new BufferedReader(fileReader);
         List<String> list = new ArrayList<>();
         String text;
@@ -28,7 +31,8 @@ public class CharacterCount {
             }
             mapa.put(list.get(i),counter);
         }
-        File output = new File("/Users/olegsolodovnikov/Desktop/output.txt");
+        String fileOutputName = fileName.replaceAll(".txt","_output.txt");
+        File output = new File(fileOutputName);
         FileOutputStream fop = new FileOutputStream(output);
         String content;
         byte[] contentInBytes;
