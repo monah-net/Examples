@@ -27,13 +27,10 @@ public class XMLComparison {
         Document doc = null;
         try {
             doc = docBuilder.parse(new File(fileName1));
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
-        System.out.println(doc.getNodeName());
-        System.out.println(doc.getDocumentElement() + " : " + doc.getParentNode());
+        System.out.println(doc);
 
     }
 }
