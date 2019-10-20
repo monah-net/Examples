@@ -7,3 +7,5 @@
 *.iml
 out
 gen
+lib/
+src/Fatcatest/
