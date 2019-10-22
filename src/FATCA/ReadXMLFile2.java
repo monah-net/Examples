@@ -3,6 +3,7 @@ package FATCA;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -10,72 +11,71 @@ import org.w3c.dom.NodeList;
 
 public class ReadXMLFile2 {
 
-        public static void main(String[] args) {
+    public static void main(String[] args) {
 
-            try {
+        try {
 
-                File file = new File("D:\\xmlFiles\\AU2018AUR5TS2T.00307.SG.AGG.20160831180224038.xml");
+            File file = new File("/Users/olegsolodovnikov/Desktop/Files/xmlFilesForTesting/AU2018AUR5TS2T.00307.SG.AGG.20160831180224038.xml");
 
-                DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance()
-                        .newDocumentBuilder();
+            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-                Document doc = dBuilder.parse(file);
+            Document doc = dBuilder.parse(file);
 
-                System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            //System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-                if (doc.hasChildNodes()) {
+            if (doc.hasChildNodes()) {
 
-                    printNote(doc.getChildNodes());
+                printNote(doc.getChildNodes());
 
-                }
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
 
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
-        private static void printNote(NodeList nodeList) {
+    }
 
-            for (int count = 0; count < nodeList.getLength(); count++) {
+    private static void printNote(NodeList nodeList) {
 
-                Node tempNode = nodeList.item(count);
+        for (int count = 0; count < nodeList.getLength(); count++) {
 
-                // make sure it's element node.
-                if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
+            Node tempNode = nodeList.item(count);
 
-                    // get node name and value
-                    System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
-                    System.out.println("Node Value =" + tempNode.getTextContent());
+            // make sure it's element node.
+            if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
 
-                    if (tempNode.hasAttributes()) {
+                // get node name and value
+                System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
+                System.out.println("Node Value =" + tempNode.getTextContent());
 
-                        // get attributes names and values
-                        NamedNodeMap nodeMap = tempNode.getAttributes();
+                if (tempNode.hasAttributes()) {
 
-                        for (int i = 0; i < nodeMap.getLength(); i++) {
+                    // get attributes names and values
+                    NamedNodeMap nodeMap = tempNode.getAttributes();
 
-                            Node node = nodeMap.item(i);
-                            System.out.println("attr name : " + node.getNodeName());
-                            System.out.println("attr value : " + node.getNodeValue());
+                    for (int i = 0; i < nodeMap.getLength(); i++) {
 
-                        }
-
-                    }
-
-                    if (tempNode.hasChildNodes()) {
-
-                        // loop again if has child nodes
-                        printNote(tempNode.getChildNodes());
+                        Node node = nodeMap.item(i);
+                        System.out.println("attr name : " + node.getNodeName());
+                        System.out.println("attr value : " + node.getNodeValue());
 
                     }
-
-                    System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
 
                 }
+
+                if (tempNode.hasChildNodes()) {
+
+                    // loop again if has child nodes
+                    printNote(tempNode.getChildNodes());
+
+                }
+
+                System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
 
             }
 
         }
 
     }
+
+}
