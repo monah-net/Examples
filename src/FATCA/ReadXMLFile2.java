@@ -21,7 +21,7 @@ public class ReadXMLFile2 {
 
             Document doc = dBuilder.parse(file);
 
-            //System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
             if (doc.hasChildNodes()) {
 
@@ -69,13 +69,8 @@ public class ReadXMLFile2 {
                     printNote(tempNode.getChildNodes());
 
                 }
-
                 System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
-
             }
-
         }
-
     }
-
 }
