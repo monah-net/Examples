@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class XMLParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
+    static ArrayList<String> listOfElements2 = new ArrayList<>();
     public static void main(String[] args) {
         try {
 
@@ -37,6 +38,8 @@ public class XMLParsing {
     private static void getNode(NodeList nodelist) {
         for (int counter = 0; counter < nodelist.getLength(); counter++) {
             Node nodeTemp = nodelist.item(counter);
+            System.out.println(nodeTemp.getNodeName());
+            System.out.println(nodeTemp.getNodeName().matches("ftc:AccountReport"));
             if (nodeTemp.getNodeType() == Node.ELEMENT_NODE) {
                 if (nodeTemp.getChildNodes().getLength() != 1){
                     listOfElements.add(nodeTemp.getNodeName() + "[OPEN]");
