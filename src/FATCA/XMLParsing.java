@@ -11,14 +11,12 @@ import java.io.File;
 
 public class XMLParsing {
     public static void main(String[] args) {
-        String result = null;
         try {
-
-            File file = new File("D:\\xmlFiles\\R5TS2T.00307.SG.2302016083118022401ORACLE.xml");
+            File file = new File("D:\\xmlFiles\\JP\\JP2016USR5TS2T.00307.SG.230.20160831180224001.xml");
 
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = dBuilder.parse(file);
-            NodeList nodeList = doc.getElementsByTagName("crs:AccountReport");
+            NodeList nodeList = doc.getElementsByTagName("ftc:AccountReport");
             if (doc.hasChildNodes()) {
                 getNode(nodeList);
             }
