@@ -14,14 +14,16 @@ public class XMLComparator {
     public static void main(String[] args) {
         try {
             Map<String , String> resultMap = new HashMap<>();
-            File file = new File("/Users/olegsolodovnikov/Desktop/Files/EtalonFiles/ID_DOM_AGG_UNIT_TESTs.xml");
-            File file2 = new File("/Users/olegsolodovnikov/Desktop/Files/EtalonFiles/ID_DOM_AGG_UNIT_TESTs.xml");
+            File file = new File("/Users/olegsolodovnikov/Desktop/File_comparison/New/AU/AU2017SGA SG_CRS_R2.20170831180224001.xml");
+            File file2 = new File("/Users/olegsolodovnikov/Desktop/File_comparison/Old/FATCA/AU/AU2017SGA SG_CRS_R2.20170831180224001.xml");
+            System.out.println(file.exists());
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             DocumentBuilder dBuilder2 = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = dBuilder.parse(file);
             Document doc2 = dBuilder2.parse(file2);
-            NodeList nodelist = doc.getElementsByTagName("DataRekening");
-            NodeList nodeList2 = doc2.getElementsByTagName("DataRekening");
+            NodeList nodelist = doc.getElementsByTagName("ftc:AccountReport");
+            NodeList nodeList2 = doc2.getElementsByTagName("ftc:AccountReport");
+            System.out.println(nodelist.getLength() + ":" + nodeList2.getLength());
             for (int i = 0; i < nodelist.getLength(); i++) {
                 resultMap.put("AccountReportNo" + i,"");
             }
@@ -29,7 +31,7 @@ public class XMLComparator {
                 if (nodelist.item(counter).getNodeType() == Node.ELEMENT_NODE) {
                     for (int counter2 = 0; counter2 < nodeList2.getLength(); counter2++) {
                         if (nodeList2.item(counter2).getNodeType() == Node.ELEMENT_NODE) {
-                            if (nodelist.item(counter).getTextContent().replaceAll("\n","").trim().equals(nodeList2.item(counter2).getTextContent().replaceAll("\n","").trim())) {
+                            if (nodelist.item(counter).getTextContent().trim().equals(nodeList2.item(counter2).getTextContent().trim())) {
                                 resultMap.replace("AccountReportNo" + counter,"DONE");
                                 break;
                             }

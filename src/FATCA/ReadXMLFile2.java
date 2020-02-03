@@ -15,7 +15,7 @@ public class ReadXMLFile2 {
 
         try {
 
-            File file = new File("D:\\xmlFiles\\R5TS2T.00307.SG.2302016083118022401ORACLE.xml");
+            File file = new File("/Users/olegsolodovnikov/Desktop/ID_DOM/ID_DOM_AGG_UNIT_TESTs.xml");
 
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 

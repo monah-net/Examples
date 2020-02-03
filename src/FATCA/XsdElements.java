@@ -15,9 +15,9 @@ import org.w3c.dom.Element;
 public class XsdElements {
     public static void main(String args[]) {
         Map <String,String> map = new HashMap<>();
-        String fileName = "/Users/MacbookPro/Desktop/TEMP/DJPDomestikBaruVERSI_1_0.xsd";
-        String highLevelElem = "xs:simpleType";
-        String elemName = "xs:enumeration";
+        String fileName = "/Users/olegsolodovnikov/Desktop/ID_DOM/DJPDomestikBaruVERSI_1_0.xsd";
+        String highLevelElem = "xs:elementoso";
+        String elemName = "xs:restriction base=\"xs:string\"";
         try {
             // parse the document
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
