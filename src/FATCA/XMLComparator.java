@@ -14,15 +14,15 @@ public class XMLComparator {
     public static void main(String[] args) {
         try {
             Map<String , String> resultMap = new HashMap<>();
-            File file = new File("/Users/olegsolodovnikov/Desktop/File_comparison/New/AU/AU2017SGA SG_CRS_R2.20170831180224001.xml");
-            File file2 = new File("/Users/olegsolodovnikov/Desktop/File_comparison/Old/FATCA/AU/AU2017SGA SG_CRS_R2.20170831180224001.xml");
+            File file = new File("/Users/olegsolodovnikov/Desktop/1111111311202004210000.xml");
+            File file2 = new File("/Users/olegsolodovnikov/Desktop/GB_DET_UNIT_Tests.xml");
             System.out.println(file.exists());
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             DocumentBuilder dBuilder2 = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = dBuilder.parse(file);
             Document doc2 = dBuilder2.parse(file2);
-            NodeList nodelist = doc.getElementsByTagName("ftc:AccountReport");
-            NodeList nodeList2 = doc2.getElementsByTagName("ftc:AccountReport");
+            NodeList nodelist = doc.getElementsByTagName("AccountData");
+            NodeList nodeList2 = doc2.getElementsByTagName("AccountData");
             System.out.println(nodelist.getLength() + ":" + nodeList2.getLength());
             for (int i = 0; i < nodelist.getLength(); i++) {
                 resultMap.put("AccountReportNo" + i,"");
@@ -35,12 +35,15 @@ public class XMLComparator {
                                 resultMap.replace("AccountReportNo" + counter,"DONE");
                                 break;
                             }
+                            else{
+                                System.out.println("AccountReportNo" + counter + " : "+ nodelist.item(counter).getTextContent().trim());
+                            }
                         }
                     }
                 }
             }
             for (Map.Entry <String, String> pair : resultMap.entrySet()
-                 ) {
+            ) {
                 System.out.println(pair.getKey() + " : " + pair.getValue());
             }
         }

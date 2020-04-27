@@ -1,7 +1,6 @@
 package FATCA;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -9,7 +8,7 @@ public class PrintDirectoriesAndFiles {
     public static void main(String[] args) throws IOException {
         String fileName = "/Users/olegsolodovnikov/Desktop/file.txt";
         FileOutputStream outputStream = new FileOutputStream(new File(fileName));
-        File folder = new File("/Users/olegsolodovnikov/Desktop/test/FATCA_OFFICIAL_RELEASE_2019v03_20200228/PROJECTS/Projects");
+        File folder = new File("/Users/olegsolodovnikov/Desktop");
         String content = printDirectoryTree(folder);
         byte[] contentInBytes = content.getBytes();
         outputStream.write(contentInBytes);
