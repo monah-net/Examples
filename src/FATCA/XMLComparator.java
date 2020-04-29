@@ -17,6 +17,7 @@ public class XMLComparator {
             File file = new File("/Users/olegsolodovnikov/Desktop/1111111311202004210000.xml");
             File file2 = new File("/Users/olegsolodovnikov/Desktop/GB_DET_UNIT_Tests.xml");
             System.out.println(file.exists());
+            System.out.println(file2.exists());
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             DocumentBuilder dBuilder2 = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = dBuilder.parse(file);
@@ -34,9 +35,6 @@ public class XMLComparator {
                             if (nodelist.item(counter).getTextContent().trim().equals(nodeList2.item(counter2).getTextContent().trim())) {
                                 resultMap.replace("AccountReportNo" + counter,"DONE");
                                 break;
-                            }
-                            else{
-                                System.out.println("AccountReportNo" + counter + " : "+ nodelist.item(counter).getTextContent().trim());
                             }
                         }
                     }

@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 public class XMLParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
-    static ArrayList<String> listOfElements2 = new ArrayList<>();
     public static void main(String[] args) {
+        parseXML("/Users/olegsolodovnikov/Desktop/1111111311202004210000.xml");
+    }
+    private static void parseXML(String xmlFilePath){
         try {
-
-            File file = new File("/Users/olegsolodovnikov/Desktop/COMPARISON/STANDARD_CRS_Agg_UNIT_TESTs.xml");
-
+            File file = new File(xmlFilePath);
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = dBuilder.parse(file);
             NodeList nodeList = doc.getChildNodes();
@@ -29,12 +29,11 @@ public class XMLParsing {
             if(doc.hasChildNodes()){
                 getNode(nodeList);
             }
-            printWriter("/Users/olegsolodovnikov/Desktop/COMPARISON/STANDARD_CRS_Agg_UNIT_TESTs.xml",listOfElements);
+            printWriter(file.getCanonicalPath(),listOfElements);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
     private static void getNode(NodeList nodelist) {
         for (int counter = 0; counter < nodelist.getLength(); counter++) {
             Node nodeTemp = nodelist.item(counter);
