@@ -8,7 +8,7 @@ public class PrintDirectoriesAndFiles {
     public static void main(String[] args) throws IOException {
         String fileName = "/Users/olegsolodovnikov/Desktop/file.txt";
         FileOutputStream outputStream = new FileOutputStream(new File(fileName));
-        File folder = new File("/Users/olegsolodovnikov/Desktop");
+        File folder = new File("/Users/olegsolodovnikov/Desktop/test/");
         String content = printDirectoryTree(folder);
         byte[] contentInBytes = content.getBytes();
         outputStream.write(contentInBytes);

@@ -4,8 +4,8 @@ import java.io.*;
 
 public class ReadXMLTagsAfterParsing {
     public static void main(String[] args) {
-        String folderPath = "/Users/olegsolodovnikov/Desktop/test/etalon/";
-        String filename = "GB_DET_UNIT_TestsRESULT.xml";
+        String folderPath = "/Users/olegsolodovnikov/Desktop/test/etalon/id021";
+        String filename = "LU_C_AGG_EmptyDocSpec_UNIT_TESTsRESULT.txt";
         File fileForRead = new File(folderPath + "/" + filename);
         StringBuilder stringBuilder = new StringBuilder();
         File fileForLoad = null;
@@ -15,9 +15,9 @@ public class ReadXMLTagsAfterParsing {
             boolean firstPart = true;
             int counterAcc = 0;
             while ((s = bufferedReader.readLine()) != null) {
-                if (s.contains("AccountData[OPEN]")) {
+                if (s.contains("crs:CrsBody[OPEN]")) {
                     if (firstPart) {
-                        fileForLoad = new File(folderPath + "/"+"Header.txt");
+                        fileForLoad = new File(folderPath + "/" + "Header.txt");
                         fileForLoad.createNewFile();
                         BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileForLoad), "UTF-8"));
                         bufferedWriter.write(stringBuilder.toString());
@@ -25,7 +25,7 @@ public class ReadXMLTagsAfterParsing {
                         stringBuilder = new StringBuilder();
                         stringBuilder.append(s);
                         stringBuilder.append("\n");
-                        fileForLoad = new File(folderPath +"/"+ s +counterAcc);
+                        fileForLoad = new File(folderPath + "/" + s + counterAcc + ".txt");
                         fileForLoad.createNewFile();
                         firstPart = false;
                         counterAcc++;
@@ -36,7 +36,7 @@ public class ReadXMLTagsAfterParsing {
                         stringBuilder = new StringBuilder();
                         stringBuilder.append(s);
                         stringBuilder.append("\n");
-                        fileForLoad = new File(folderPath + "/" + s+counterAcc);
+                        fileForLoad = new File(folderPath + "/" + s + counterAcc + ".txt");
                         fileForLoad.createNewFile();
                         counterAcc++;
                     }

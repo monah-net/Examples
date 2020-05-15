@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class XMLParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
     public static void main(String[] args) {
-        parseXML("/Users/olegsolodovnikov/Desktop/1111111311202004210000.xml");
+        parseXML("/Users/olegsolodovnikov/Desktop/test/etalon/id044/ID_044_Etalon_02.xml");
     }
     private static void parseXML(String xmlFilePath){
         try {
@@ -60,7 +60,7 @@ public class XMLParsing {
     }
     private static void printWriter (String filename, ArrayList <String> content){
         try (
-                PrintWriter writer = new PrintWriter(new File(filename.replaceAll(".xml","RESULT.xml"))) ) {
+                PrintWriter writer = new PrintWriter(new File(filename.replaceAll(".xml","RESULT.txt"))) ) {
             for (int counter = 0; counter < content.size(); counter++) {
                 writer.write(content.get(counter) + "\n");
             }
