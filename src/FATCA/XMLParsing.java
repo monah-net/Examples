@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class XMLParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
     public static void main(String[] args) {
-        parseXML("/Users/olegsolodovnikov/Desktop/test/etalon/id044/ID_044_Etalon_02.xml");
+        parseXML("/Users/olegsolodovnikov/Desktop/test1/etalon/id003/1111111311202005130000.xml");
     }
     private static void parseXML(String xmlFilePath){
         try {

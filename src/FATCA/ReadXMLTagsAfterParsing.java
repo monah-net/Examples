@@ -4,8 +4,8 @@ import java.io.*;
 
 public class ReadXMLTagsAfterParsing {
     public static void main(String[] args) {
-        String folderPath = "/Users/olegsolodovnikov/Desktop/test/etalon/id021";
-        String filename = "LU_C_AGG_EmptyDocSpec_UNIT_TESTsRESULT.txt";
+        String folderPath = "/Users/olegsolodovnikov/Desktop/test1/etalon/id003";
+        String filename = "1111111311202005130000RESULT.txt";
         File fileForRead = new File(folderPath + "/" + filename);
         StringBuilder stringBuilder = new StringBuilder();
         File fileForLoad = null;
@@ -15,7 +15,7 @@ public class ReadXMLTagsAfterParsing {
             boolean firstPart = true;
             int counterAcc = 0;
             while ((s = bufferedReader.readLine()) != null) {
-                if (s.contains("crs:CrsBody[OPEN]")) {
+                if (s.contains("AccountData[OPEN]")) {
                     if (firstPart) {
                         fileForLoad = new File(folderPath + "/" + "Header.txt");
                         fileForLoad.createNewFile();
