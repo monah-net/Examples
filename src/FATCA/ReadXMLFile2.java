@@ -1,13 +1,13 @@
 package FATCA;
 
-import java.io.File;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
 
 public class ReadXMLFile2 {
 
@@ -15,7 +15,7 @@ public class ReadXMLFile2 {
 
         try {
 
-            File file = new File("/Users/olegsolodovnikov/Desktop/ID_DOM/ID_DOM_AGG_UNIT_TESTs.xml");
+            File file = new File("/Users/olegsolodovnikov/Desktop/problem_IDs/etalonSub/id_003/1111111311202005130000.xml");
 
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 

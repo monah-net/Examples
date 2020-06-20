@@ -4,7 +4,7 @@ import java.io.*;
 
 public class ReadXMLTagsAfterParsing {
     public static void main(String[] args) {
-        String folderPath = "/Users/olegsolodovnikov/Desktop/test1/etalon/id003";
+        String folderPath = "/Users/olegsolodovnikov/Desktop/problem_IDs/etalonSub/id_003";
         String filename = "1111111311202005130000RESULT.txt";
         File fileForRead = new File(folderPath + "/" + filename);
         StringBuilder stringBuilder = new StringBuilder();

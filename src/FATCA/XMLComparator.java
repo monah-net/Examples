@@ -14,9 +14,9 @@ public class XMLComparator {
     public static void main(String[] args) {
         try {
             Map<String , String> resultMap = new HashMap<>();
-            File file = new File("/Users/olegsolodovnikov/Desktop/test2/id009/etalon/IDTS2T00307GDET-ID-2019-0.xml");
-            File file2 = new File("/Users/olegsolodovnikov/Desktop/test2/id009/submission/IDTS2T00307GDET-ID-2019-0.xml");
-            String elementname = "DataRekening";
+            File file = new File("/Users/olegsolodovnikov/Desktop/problem_IDs/etalonSub/id_003/1111111311202005130000.xml");
+            File file2 = new File("/Users/olegsolodovnikov/Desktop/problem_IDs/FileResultsOfExecutionUT/id003/11111113112020060523220000.xml");
+            String elementname = "AccountData";
             System.out.println(file.exists());
             System.out.println(file2.exists());
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

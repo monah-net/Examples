@@ -11,10 +11,10 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class XMLParsing {
+public class XMLtoTXTParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
     public static void main(String[] args) {
-        parseXML("/Users/olegsolodovnikov/Desktop/test1/etalon/id003/1111111311202005130000.xml");
+        parseXML("/Users/olegsolodovnikov/Desktop/problem_IDs/etalonSub/id_003/1111111311202005130000.xml");
     }
     private static void parseXML(String xmlFilePath){
         try {
