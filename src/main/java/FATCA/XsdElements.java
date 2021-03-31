@@ -16,7 +16,7 @@ import java.util.Map;
 public class XsdElements {
     public static void main(String args[]) {
         Map <String,String> map = new HashMap<>();
-        String fileName = "/Users/olegsolodovnikov/Desktop/ID_DOM/DJPDomestikBaruVERSI_1_0.xsd";
+        String fileName = "/Users/olegsolodovnikov/MyDocuments/Axiom/FATCA/schemas/Standard_CRS_Schema_v2.0/CrsXML_v2.0.xsd";
         String highLevelElem = "xs:element";
         String elemName = "xs:restriction base=\"xs:string\"";
         try {

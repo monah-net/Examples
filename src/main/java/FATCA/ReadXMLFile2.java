@@ -15,7 +15,7 @@ public class ReadXMLFile2 {
 
         try {
 
-            File file = new File("/Users/olegsolodovnikov/Desktop/problem_IDs/etalonSub/id_003/1111111311202005130000.xml");
+            File file = new File("/Users/olegsolodovnikov/MyDocuments/Axiom/FATCA/Tickets/XMLFilesComparison/MRID1234500120201127.xml");
 
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
