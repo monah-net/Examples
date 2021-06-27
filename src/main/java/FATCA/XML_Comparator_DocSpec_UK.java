@@ -10,13 +10,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.*;
 
-public class XMLCompareByDocSpecElements {
+public class XML_Comparator_DocSpec_UK {
     public static void main(String[] args) {
         List<String> allDocRefIdElementsList = new ArrayList<>();
         List<String> listDocSpec = new ArrayList<>();
         File inputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/XML_Files/UK/result_fatca_det_uk.xml");
         File outputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/XML_Files/UK/origin_fatca_det_uk.xml");
-        String elementName = "AccountRef";
+        String elementName = "FIReturnRef";
         String messageHeaderElem = "MessageRef";
 
         try {
@@ -39,7 +39,7 @@ public class XMLCompareByDocSpecElements {
                 nodelistOutputMsgHdrChildValues.add(nodelistOutputMsgHdrChilds.item(outpMsgHeadCounter).getTextContent());
             }
             nodelistInputMsgHdrChildValues.removeAll(nodelistOutputMsgHdrChildValues);
-            if (nodelistInputMsgHdrChildValues.isEmpty()){
+            if (nodelistInputMsgHdrChildValues.isEmpty()) {
                 System.out.println("All elements from input file are presented at an output file");
             }
             for (int j = 0; j < nodelistInput.getLength(); j++) {//add all DocRefId's to the list
@@ -53,7 +53,7 @@ public class XMLCompareByDocSpecElements {
                     Node elementTempDocRefIdOutput = nodelistOutput.item(k);
                     if (elementTempDocRefIdInput.getTextContent().equals(elementTempDocRefIdOutput.getTextContent())) {
                         Node elementTempParentOutput = elementTempDocRefIdOutput.getParentNode().getParentNode();
-                        if (elementTempParentInput.getNodeName().equals("crs:ReportingFI")) {
+                        if (elementTempParentInput.getNodeName().equals("###ReportingFI")) {
                             ArrayList<String> repFIElemValuesInput = new ArrayList<>();
                             ArrayList<String> repFIElemValuesOutput = new ArrayList<>();
                             NodeList repFIChildsInput = elementTempParentInput.getChildNodes();
@@ -94,7 +94,7 @@ public class XMLCompareByDocSpecElements {
                             if (repFIElemValuesInput.isEmpty()) {
                                 System.out.println("Element with DocRefID " + elementTempDocRefIdInput.getTextContent() + " does not have difference");
                             } else {
-                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent() );
+                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent());
                             }
                         } else if (elementTempParentInput.getNodeName().equals("crs:Sponsor")) {
                             ArrayList<String> sponsorElemValuesInput = new ArrayList<>();
@@ -141,7 +141,7 @@ public class XMLCompareByDocSpecElements {
                             if (sponsorElemValuesInput.isEmpty()) {
                                 System.out.println("ReportingFI element is OK!");
                             } else {
-                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent() );
+                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent());
                             }
 
                         } else if (elementTempParentInput.getNodeName().equals("crs:Intermediary")) {
@@ -189,10 +189,10 @@ public class XMLCompareByDocSpecElements {
                             if (intermElemValuesInput.isEmpty()) {
                                 System.out.println("Intermediary element is OK!");
                             } else {
-                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent() );
+                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent());
                             }
 
-                        } else if (elementTempParentInput.getNodeName().equals("crs:AccountReport")) {
+                        } else if (elementTempParentInput.getNodeName().equals("AccountData")) {
                             ArrayList<String> accRepElemValuesInput = new ArrayList<>();
                             ArrayList<String> accRepElemValuesOutput = new ArrayList<>();
                             NodeList accRepChildsInput = elementTempParentInput.getChildNodes();
@@ -237,7 +237,7 @@ public class XMLCompareByDocSpecElements {
                             if (accRepElemValuesInput.isEmpty()) {
                                 System.out.println("AccountReport element is OK!");
                             } else {
-                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent() );
+                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent());
                             }
 
                         } else if (elementTempParentInput.getNodeName().equals("crs:PoolReport")) {
@@ -284,7 +284,7 @@ public class XMLCompareByDocSpecElements {
                             if (poolRepElemValuesInput.isEmpty()) {
                                 System.out.println("PoolReport element is OK!");
                             } else {
-                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent() );
+                                System.out.println("AccountReport element contains differences, check " + elementTempParentInput.getNodeName() + " text : " + elementTempDocRefIdInput.getTextContent());
                             }
 
                         } else if (elementTempParentInput.getNodeName().equals("crs:DocSpec")) {
