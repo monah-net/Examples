@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class XMLCompareByDocSpecElements {
+public class XMLCompareByDocSpecElements_UK {
     public static void main(String[] args) {
         List<String> allDocRefIdElementsList = new ArrayList<>();
         List<String> listDocSpec = new ArrayList<>();
