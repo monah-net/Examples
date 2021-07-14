@@ -17,20 +17,24 @@ import java.util.stream.Collectors;
 
 class XML_comparatorNEW {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+        HashMap<String, String> mapa = new HashMap<>();
+        mapa.put("FIReturn","FIReturnRef");
+        mapa.put("AccountData","AccountRef");
+        mapa.put("PoolReport","PoolReportRef");
         ArrayList resElementsIn = new ArrayList();
         ArrayList resElementsOut = new ArrayList();
-        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\TEMP_FOLDER\\UK\\XML_Files\\origin_fatca_det_uk_TEST_Lineriased_Linear.xml");
-        File outputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\TEMP_FOLDER\\UK\\XML_Files\\origin_fatca_det_uk_TEST.xml");
+        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\XML_Files\\UK\\origin_fatca_det_uk_TEST_Lineriase.xml");
+        File outputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\XML_Files\\UK\\origin_fatca_det_uk_TEST_Lineriase.xml");
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
         Document javaParsedOutput = dBuilderInput.parse(outputXmlFile);
-        NodeList allElements = javaParsedInput.getElementsByTagName("*");
+        NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
         NodeList allElementsOut = javaParsedOutput.getElementsByTagName("*");
-        System.out.println(allElements.getLength());
+        System.out.println(allElementsIn.getLength());
         System.out.println(allElementsOut.getLength());
 //        get all elements from file into resElementsIn array
-        for (int i = 0; i < allElements.getLength(); i++) {
-            Node current = allElements.item(i);
+        for (int i = 0; i < allElementsIn.getLength(); i++) {
+            Node current = allElementsIn.item(i);
             Node currChild = current.getFirstChild();
             if (currChild.getNodeType() == Node.TEXT_NODE) {
                 StringBuilder attribute = new StringBuilder();
@@ -48,6 +52,12 @@ class XML_comparatorNEW {
                 String currElemName = current.getNodeName() + attribute + ":" + current.getTextContent();
                 while (!current.getParentNode().getNodeName().equals("#document")) {
                     current = current.getParentNode();
+//                  Get Reference value into the parsed string
+                    String reference="";
+                    if(mapa.containsKey(current.getNodeName()) && current.getFirstChild().getFirstChild().getNodeName().equals(mapa.get(current.getNodeName()))){
+                        reference = current.getFirstChild().getFirstChild().getTextContent();
+                        System.out.println("reference : " + current.getFirstChild().getFirstChild().getNodeName() + reference);
+                    }
                     StringBuilder attributeParent = new StringBuilder();
                     if (current.hasAttributes() && !current.getParentNode().getNodeName().equals("#document")) {
                         NamedNodeMap currAttrs = current.getAttributes();
@@ -60,12 +70,17 @@ class XML_comparatorNEW {
                             attributeParent.append(attrTempList.get(j));
                         }
                     }
-                    currElemName = current.getNodeName() + attributeParent + "." + currElemName;
+                    if (reference.equals("")){
+                        currElemName = current.getNodeName() + attributeParent + "." + currElemName;
+                    }
+                    else{
+                        currElemName = current.getNodeName() + ":" + reference + attributeParent + "." + currElemName;
+                    }
                 }
                 resElementsIn.add(currElemName);
             }
         }
-        //        get all elements from file into resElementsOut array
+//                Get all elements from file into resElementsOut array
         for (int i = 0; i < allElementsOut.getLength(); i++) {
             Node current = allElementsOut.item(i);
             Node currChild = current.getFirstChild();
@@ -119,5 +134,6 @@ class XML_comparatorNEW {
         System.out.println(resElementsOut);
         System.out.println(resElementsIn.isEmpty());
         System.out.println(resElementsOut.isEmpty());
+
     }
 }

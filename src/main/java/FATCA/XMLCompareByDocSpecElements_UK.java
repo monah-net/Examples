@@ -17,8 +17,8 @@ public class XMLCompareByDocSpecElements_UK {
     public static void main(String[] args) {
         List<String> allDocRefIdElementsList = new ArrayList<>();
         List<String> listDocSpec = new ArrayList<>();
-        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\XML_files\\CRS_SG\\2016----------20160831001CRS.xml");
-        File outputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\XML_files\\CRS_SG\\2016----------20160831001CRS_original.xml");
+        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\XML_Files\\UK\\origin_fatca_det_uk_TEST.xml");
+        File outputXmlFile = new File("C:\\Users\\osolodovnikov\\Desktop\\XML_Files\\UK\\origin_fatca_det_uk_TEST_Lineriase.xml");
         String elementName = "stf:DocRefId";
         String messageHeaderElem = "crs:MessageSpec";
 
