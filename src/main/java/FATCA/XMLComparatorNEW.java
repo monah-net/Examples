@@ -26,8 +26,8 @@ class XML_comparatorNEW {
         mapa.put("PoolReport", "PoolReportRef");
         ArrayList resElementsIn = new ArrayList();
         ArrayList resElementsOut = new ArrayList();
-        files[input] = "C:\\Users\\osolodovnikov\\workingdir\\xmlFiles\\UK\\origin_GB_crs_Lineriased.xml";
-        files[output] = "C:\\Users\\osolodovnikov\\workingdir\\xmlFiles\\UK\\origin_GB_crsUPD_oneLine.xml";
+        files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_GB_crs_Lineriased.xml";
+        files[output] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_GB_crsUPD_oneLine.xml";
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         List[] resElements = new List[]{new ArrayList(), new ArrayList()};
 //        get all elements from file into resElementsIn array
@@ -87,15 +87,22 @@ class XML_comparatorNEW {
 
         List resElementsInTemp = new ArrayList();
         List resElementsOutTemp = new ArrayList();
+        Set<String> foo = new HashSet<String>(resElements[output]);
+        System.out.println(foo.size());
+        System.out.println(resElements[output].size());
+        System.out.println(resElements[output]);
+        System.out.println(foo);
         resElementsInTemp.addAll(resElements[input]);
         resElementsOutTemp.addAll(resElements[output]);
-        System.out.println(resElementsInTemp);
-        System.out.println(resElementsOutTemp);
-        resElements[input].removeAll(resElementsOutTemp);
-        resElements[output].removeAll(resElementsInTemp);
+//        System.out.println(resElementsInTemp);
+//        System.out.println(resElementsOutTemp);
+        resElements[input].removeAll(foo);
+//        resElements[output].removeAll(resElementsInTemp);
+//        System.out.println(resElements[input]);
+//        System.out.println(resElements[output]);
         System.out.println(resElements[input]);
-        System.out.println(resElements[output]);
         System.out.println(resElements[input].isEmpty());
-        System.out.println( resElements[output].isEmpty());
+        System.out.println(resElements[input].size());
+//        System.out.println( resElements[output].isEmpty());
     }
 }

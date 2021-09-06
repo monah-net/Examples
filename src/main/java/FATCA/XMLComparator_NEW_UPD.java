@@ -14,7 +14,7 @@ import java.util.*;
 
 public class XMLComparator_NEW_UPD {
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\workingdir\\xmlFiles\\UK\\origin_GB_crs_Lineriased.xml");
+        File inputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_GB_crs_Lineriased.xml");
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
         NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
