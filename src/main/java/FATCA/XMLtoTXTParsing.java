@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class XMLtoTXTParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
     public static void main(String[] args) {
-        parseXML("/Users/olegsolodovnikov/Desktop/problem_IDs/etalonSub/id_003/1111111311202005130000.xml");
+        parseXML("C:\\Users\\osolodovnikov\\Desktop\\XML_Files\\id001\\JP2016USR5TS2T.00307.SG.230.20210625123100001_liner.xml");
     }
     private static void parseXML(String xmlFilePath){
         try {
