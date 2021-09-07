@@ -87,16 +87,15 @@ class XML_comparatorNEW {
 
         List resElementsInTemp = new ArrayList();
         List resElementsOutTemp = new ArrayList();
-        Set<String> foo = new HashSet<String>(resElements[output]);
-        System.out.println(foo.size());
+        Set<String> dublicates = new HashSet<String>(resElements[output]);
+        System.out.println(dublicates.size());
         System.out.println(resElements[output].size());
         System.out.println(resElements[output]);
-        System.out.println(foo);
+        System.out.println(dublicates);
         resElementsInTemp.addAll(resElements[input]);
         resElementsOutTemp.addAll(resElements[output]);
 //        System.out.println(resElementsInTemp);
 //        System.out.println(resElementsOutTemp);
-        resElements[input].removeAll(foo);
 //        resElements[output].removeAll(resElementsInTemp);
 //        System.out.println(resElements[input]);
 //        System.out.println(resElements[output]);
