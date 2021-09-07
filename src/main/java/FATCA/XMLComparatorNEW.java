@@ -20,6 +20,11 @@ class XML_comparatorNEW {
         final int input = 0;
         final int output = 1;
         String[] files = new String[2];
+        Map <String, Set<String>> params = new HashMap<>();
+        params.put("FIReturn",new HashSet<String>(Arrays.asList("FIReturnRef","2")));
+        params.put("AccountData",new HashSet<String>(Arrays.asList("AccountRef","2")));
+        params.put("PoolReport",new HashSet<String>(Arrays.asList("PoolReportRef","2")));
+        params.put("PoolReport",new HashSet<String>(Arrays.asList("PoolReportRef","2")));
         HashMap<String, String> mapa = new HashMap<>();
         mapa.put("FIReturn", "FIReturnRef");
         mapa.put("AccountData", "AccountRef");
