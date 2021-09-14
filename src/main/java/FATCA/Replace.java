@@ -6,5 +6,8 @@ public class Replace {
                 "NULL</VALUE></CONDITION></CONDITION>";
         String after = before.replaceFirst("<CONDITION><CONDITION type=\"SINGULAR_CONCRETE\"><COLUMN><ALIAS>","").replaceAll("</ALIAS><COLNAME>",".").replaceAll("</COLNAME></COLUMN><OPERATION>"," ").replaceAll("</OPERATION><VALUE/></CONDITION><COPULA>"," '' ").replaceAll("</COPULA><CONDITION type=\"EXPRESSION_SINGULAR\"><COLUMN><ALIAS>"," ").replaceAll("</OPERATION><VALUE>"," ").replaceAll("</VALUE></CONDITION></CONDITION>"," ");
         System.out.println(after);
+        String tin = "<IdentitasUnik>20181234567891230000000002</IdentitasUnik>";
+        String updatedTin = tin.replaceAll("<IdentitasUnik>.*</IdentitasUnik>","<IdentitasUnik>123</IdentitasUnik>");
+        System.out.println(updatedTin);
     }
 }

@@ -1,23 +1,24 @@
 package FATCA;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
 
 public class XsdElements {
     public static void main(String args[]) {
         Map <String,String> map = new HashMap<>();
-        String fileName = "/Users/MacbookPro/Desktop/TEMP/DJPDomestikBaruVERSI_1_0.xsd";
-        String highLevelElem = "xs:simpleType";
-        String elemName = "xs:enumeration";
+        String fileName = "/Users/olegsolodovnikov/MyDocuments/Axiom/FATCA/schemas/Standard_CRS_Schema_v2.0/CrsXML_v2.0.xsd";
+        String highLevelElem = "xs:element";
+        String elemName = "xs:restriction base=\"xs:string\"";
         try {
             // parse the document
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();

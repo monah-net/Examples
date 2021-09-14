@@ -11,14 +11,14 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class XMLParsing {
+public class XMLtoTXTParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
-    static ArrayList<String> listOfElements2 = new ArrayList<>();
     public static void main(String[] args) {
+        parseXML("C:\\Users\\osolodovnikov\\Desktop\\XML_Files\\id001\\JP2016USR5TS2T.00307.SG.230.20210625123100001_liner.xml");
+    }
+    private static void parseXML(String xmlFilePath){
         try {
-
-            File file = new File("D:\\xmlFiles\\JP\\JP2016USR5TS2T.00307.SG.230.20160831180224051ORACLE.xml");
-
+            File file = new File(xmlFilePath);
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = dBuilder.parse(file);
             NodeList nodeList = doc.getChildNodes();
@@ -29,17 +29,14 @@ public class XMLParsing {
             if(doc.hasChildNodes()){
                 getNode(nodeList);
             }
-            printWriter("D:\\xmlFiles\\JP\\out2.txt",listOfElements);
+            printWriter(file.getCanonicalPath(),listOfElements);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
     private static void getNode(NodeList nodelist) {
         for (int counter = 0; counter < nodelist.getLength(); counter++) {
             Node nodeTemp = nodelist.item(counter);
-            System.out.println(nodeTemp.getNodeName());
-            System.out.println(nodeTemp.getNodeName().matches("ftc:AccountReport"));
             if (nodeTemp.getNodeType() == Node.ELEMENT_NODE) {
                 if (nodeTemp.getChildNodes().getLength() != 1){
                     listOfElements.add(nodeTemp.getNodeName() + "[OPEN]");
@@ -63,7 +60,7 @@ public class XMLParsing {
     }
     private static void printWriter (String filename, ArrayList <String> content){
         try (
-                PrintWriter writer = new PrintWriter(new File(filename)) ) {
+                PrintWriter writer = new PrintWriter(new File(filename.replaceAll(".xml","RESULT.txt"))) ) {
             for (int counter = 0; counter < content.size(); counter++) {
                 writer.write(content.get(counter) + "\n");
             }
