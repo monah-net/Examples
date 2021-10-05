@@ -30,7 +30,7 @@ public class XMLComparator_NEW_UPD {
                     String childName = allNodeChildren.item(j).getNodeName();
                     if (elemChildrenNames.contains(childName)){
                         if (elemChildrenNamesRepeated == null){
-                            elemChildrenNamesRepeated = new HashSet<>();
+                            elemChildrenNamesRepeated = на;
                             manyChildren.put(currNodeName, elemChildrenNamesRepeated);
                         }
                         elemChildrenNamesRepeated.add(childName);
