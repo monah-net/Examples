@@ -14,7 +14,7 @@ import java.util.*;
 
 public class XMLComparator_NEW_UPD {
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        File inputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_GB_crs_Lineriased.xml");
+        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\workingdir\\FATCA\\ComparisonTool\\G5ME2G.00007.ME.8402021060708180000_1_Linearised.xml");
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
         NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
@@ -30,8 +30,9 @@ public class XMLComparator_NEW_UPD {
                     String childName = allNodeChildren.item(j).getNodeName();
                     if (elemChildrenNames.contains(childName)){
                         if (elemChildrenNamesRepeated == null){
-                            elemChildrenNamesRepeated = на;
+                            elemChildrenNamesRepeated = new HashSet<>();
                             manyChildren.put(currNodeName, elemChildrenNamesRepeated);
+//                            System.out.println(manyChildren);
                         }
                         elemChildrenNamesRepeated.add(childName);
                     }
@@ -39,6 +40,6 @@ public class XMLComparator_NEW_UPD {
                 }
             }
         }
-        System.out.println("TEST");
+        System.out.println(manyChildren);
     }
 }

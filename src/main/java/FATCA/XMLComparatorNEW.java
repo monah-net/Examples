@@ -24,15 +24,12 @@ class XML_comparatorNEW {
         params.put("FIReturn",new HashSet<String>(Arrays.asList("FIReturnRef","2")));
         params.put("AccountData",new HashSet<String>(Arrays.asList("AccountRef","2")));
         params.put("PoolReport",new HashSet<String>(Arrays.asList("PoolReportRef","2")));
-        params.put("PoolReport",new HashSet<String>(Arrays.asList("PoolReportRef","2")));
         HashMap<String, String> mapa = new HashMap<>();
         mapa.put("FIReturn", "FIReturnRef");
         mapa.put("AccountData", "AccountRef");
         mapa.put("PoolReport", "PoolReportRef");
-        ArrayList resElementsIn = new ArrayList();
-        ArrayList resElementsOut = new ArrayList();
-        files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_GB_crs_Lineriased.xml";
-        files[output] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_GB_crsUPD_oneLine.xml";
+        files[input] = "C:\\Users\\osolodovnikov\\workingdir\\FATCA\\ComparisonTool\\G5ME2G.00007.ME.8402021060708180000_1_Linearised.xml";
+        files[output] = "C:\\Users\\osolodovnikov\\workingdir\\FATCA\\ComparisonTool\\G5ME2G.00007.ME.8402021060708180000_2_Lineriased.xml";
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         List[] resElements = new List[]{new ArrayList(), new ArrayList()};
 //        get all elements from file into resElementsIn array
@@ -63,7 +60,7 @@ class XML_comparatorNEW {
                         String reference = "";
                         if (mapa.containsKey(current.getNodeName()) && current.getFirstChild().getFirstChild().getNodeName().equals(mapa.get(current.getNodeName()))) {
                             reference = current.getFirstChild().getFirstChild().getTextContent();
-                            System.out.println("reference : " + current.getFirstChild().getFirstChild().getNodeName() + reference);
+//                            System.out.println("reference : " + current.getFirstChild().getFirstChild().getNodeName() + reference);
                         }
                         StringBuilder attributeParent = new StringBuilder();
                         if (current.hasAttributes() && !current.getParentNode().getNodeName().equals("#document")) {
@@ -92,21 +89,23 @@ class XML_comparatorNEW {
 
         List resElementsInTemp = new ArrayList();
         List resElementsOutTemp = new ArrayList();
-        Set<String> dublicates = new HashSet<String>(resElements[output]);
-        System.out.println(dublicates.size());
-        System.out.println(resElements[output].size());
-        System.out.println(resElements[output]);
-        System.out.println(dublicates);
+//        Set<String> dublicates = new HashSet<String>(resElements[output]);
+//        System.out.println("dublicates" + dublicates.size());
+//        System.out.println("output size" + resElements[output].size());
+//        System.out.println(resElements[output]);
+//        System.out.println(dublicates);
         resElementsInTemp.addAll(resElements[input]);
         resElementsOutTemp.addAll(resElements[output]);
 //        System.out.println(resElementsInTemp);
 //        System.out.println(resElementsOutTemp);
-//        resElements[output].removeAll(resElementsInTemp);
+        resElements[output].removeAll(resElementsInTemp);
 //        System.out.println(resElements[input]);
 //        System.out.println(resElements[output]);
         System.out.println(resElements[input]);
         System.out.println(resElements[input].isEmpty());
         System.out.println(resElements[input].size());
-//        System.out.println( resElements[output].isEmpty());
+        System.out.println(resElements[output].isEmpty());
+        System.out.println(resElements[output].size());
+        System.out.println(resElements[output]);
     }
 }
