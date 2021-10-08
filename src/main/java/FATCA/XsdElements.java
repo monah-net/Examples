@@ -16,9 +16,9 @@ import java.util.Map;
 public class XsdElements {
     public static void main(String args[]) {
         Map <String,String> map = new HashMap<>();
-        String fileName = "/Users/olegsolodovnikov/MyDocuments/Axiom/FATCA/schemas/Standard_CRS_Schema_v2.0/CrsXML_v2.0.xsd";
-        String highLevelElem = "xs:element";
-        String elemName = "xs:restriction base=\"xs:string\"";
+        String fileName = "U:\\XMLSchema\\Standard\\FATCA\\isofatcatypes_v1.1.xsd";
+        String highLevelElem = "xsd:simpleType";
+        String elemName = "xsd:restriction base=\"xsd:string\"";
         try {
             // parse the document
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
