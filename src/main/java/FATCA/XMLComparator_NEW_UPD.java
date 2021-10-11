@@ -14,7 +14,7 @@ import java.util.*;
 
 public class XMLComparator_NEW_UPD {
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\workingdir\\FATCA\\ComparisonTool\\G5ME2G.00007.ME.8402021060708180000_1_Linearised.xml");
+        File inputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_Lineriased.xml");
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
         NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
