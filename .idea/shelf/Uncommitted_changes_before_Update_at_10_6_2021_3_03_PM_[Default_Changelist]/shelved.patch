@@ -1,0 +1,19 @@
+Index: src/main/java/FATCA/XMLComparator_NEW_UPD.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package FATCA;\r\n\r\nimport org.w3c.dom.Document;\r\nimport org.w3c.dom.Node;\r\nimport org.w3c.dom.NodeList;\r\nimport org.xml.sax.SAXException;\r\n\r\nimport javax.xml.parsers.DocumentBuilder;\r\nimport javax.xml.parsers.DocumentBuilderFactory;\r\nimport javax.xml.parsers.ParserConfigurationException;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.util.*;\r\n\r\npublic class XMLComparator_NEW_UPD {\r\n    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {\r\n        File inputXmlFile = new File(\"/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_GB_crs_Lineriased.xml\");\r\n        DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();\r\n        Document javaParsedInput = dBuilderInput.parse(inputXmlFile);\r\n        NodeList allElementsIn = javaParsedInput.getElementsByTagName(\"*\");\r\n        Map <String, Set<String>> manyChildren = new HashMap<>();\r\n        for (int i = 0; i < allElementsIn.getLength(); i++) {\r\n            Node currNode = allElementsIn.item(i);\r\n            String currNodeName = currNode.getNodeName();\r\n            if(currNode.hasChildNodes()){\r\n                Set<String> elemChildrenNames= new HashSet<>();\r\n                Set<String> elemChildrenNamesRepeated = manyChildren.get(currNodeName);\r\n                NodeList allNodeChildren = currNode.getChildNodes();\r\n                for (int j = 0; j < allNodeChildren.getLength(); j++) {\r\n                    String childName = allNodeChildren.item(j).getNodeName();\r\n                    if (elemChildrenNames.contains(childName)){\r\n                        if (elemChildrenNamesRepeated == null){\r\n                            elemChildrenNamesRepeated = на;\r\n                            manyChildren.put(currNodeName, elemChildrenNamesRepeated);\r\n                        }\r\n                        elemChildrenNamesRepeated.add(childName);\r\n                    }\r\n                    elemChildrenNames.add(childName);\r\n                }\r\n            }\r\n        }\r\n        System.out.println(\"TEST\");\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/FATCA/XMLComparator_NEW_UPD.java b/src/main/java/FATCA/XMLComparator_NEW_UPD.java
+--- a/src/main/java/FATCA/XMLComparator_NEW_UPD.java	(revision 508f1fa6dc8e4293246a67242af3645b1036bfea)
++++ b/src/main/java/FATCA/XMLComparator_NEW_UPD.java	(date 1633457823403)
+@@ -30,7 +30,7 @@
+                     String childName = allNodeChildren.item(j).getNodeName();
+                     if (elemChildrenNames.contains(childName)){
+                         if (elemChildrenNamesRepeated == null){
+-                            elemChildrenNamesRepeated = на;
++                            elemChildrenNamesRepeated = ;
+                             manyChildren.put(currNodeName, elemChildrenNamesRepeated);
+                         }
+                         elemChildrenNamesRepeated.add(childName);
