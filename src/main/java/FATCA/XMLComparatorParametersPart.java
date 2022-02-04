@@ -28,7 +28,7 @@ public class XMLComparatorParametersPart {
         Map<String, List<String>> params = new HashMap<String, List<String>>();
 //        Map<String, ArrayList<ArrayList<String>>> paramsTEST = new HashMap<String, ArrayList<ArrayList<String>>>();
 //        paramsTEST.put("ControllingPerson",new ArrayList<ArrayList<String>>(Arrays.asList("Person", "HolderTaxInfo","TIN"),Arrays.asList("Person", "HolderTaxInfo","ResCountryCode")));
-        params.put("ControllingPerson", new ArrayList<>(Arrays.asList("Person", "HolderTaxInfo","TIN")));
+        params.put("ControllingPerson", new ArrayList<>(Arrays.asList("Person", "HolderTaxInfo")));
         Map<String, String> iteratebleElements = new HashMap<String, String>();
         for (int i = 0; i < allElementsIn.getLength(); i++) {
             if(allElementsIn.item(i).getNodeType() == Node.ELEMENT_NODE){
