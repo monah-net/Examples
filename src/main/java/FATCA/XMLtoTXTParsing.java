@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class XMLtoTXTParsing {
     static ArrayList<String> listOfElements = new ArrayList<>();
     public static void main(String[] args) {
-        parseXML("C:\\Users\\osolodovnikov\\Desktop\\XML_Files\\id001\\JP2016USR5TS2T.00307.SG.230.20210625123100001_liner.xml");
+        parseXML("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml");
     }
     private static void parseXML(String xmlFilePath){
         try {

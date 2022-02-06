@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,9 +26,10 @@ public class XMLComparatorParametersPart {
         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
         NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
         Map<String, List<String>> params = new HashMap<String, List<String>>();
-        params.put("ControllingPerson", new ArrayList<String>(Arrays.asList("Person", "HolderTaxInfo", "TIN")));
+//        Map<String, ArrayList<ArrayList<String>>> paramsTEST = new HashMap<String, ArrayList<ArrayList<String>>>();
+//        paramsTEST.put("ControllingPerson",new ArrayList<ArrayList<String>>(Arrays.asList("Person", "HolderTaxInfo","TIN"),Arrays.asList("Person", "HolderTaxInfo","ResCountryCode")));
+        params.put("ControllingPerson", new ArrayList<>(Arrays.asList("Person", "HolderTaxInfo")));
         Map<String, String> iteratebleElements = new HashMap<String, String>();
-        String key = null;
         for (int i = 0; i < allElementsIn.getLength(); i++) {
             if(allElementsIn.item(i).getNodeType() == Node.ELEMENT_NODE){
                 Node currentNode = allElementsIn.item(i);
@@ -43,6 +45,9 @@ public class XMLComparatorParametersPart {
                             else{
                                 subNode = subNode.getNextSibling();
                                 System.out.println(subNode.getNodeName());
+                                System.out.println(subNode.getTextContent());
+                                System.out.println(subNode.getChildNodes().getLength());
+                                System.out.println(subNode.getFirstChild().getNodeType() == Node.TEXT_NODE);
                             }
                         }
                     }
