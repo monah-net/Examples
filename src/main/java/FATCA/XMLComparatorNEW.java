@@ -1,10 +1,7 @@
 package FATCA;
 
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,16 +17,13 @@ class XML_comparatorNEW {
         final int input = 0;
         final int output = 1;
         String[] files = new String[2];
-        Map <String, Set<String>> params = new HashMap<>();
-        params.put("FIReturn",new HashSet<String>(Arrays.asList("FIReturnRef","2")));
-        params.put("AccountData",new HashSet<String>(Arrays.asList("AccountRef","2")));
-        params.put("PoolReport",new HashSet<String>(Arrays.asList("PoolReportRef","2")));
-        HashMap<String, String> mapa = new HashMap<>();
-        mapa.put("FIReturn", "FIReturnRef");
-        mapa.put("AccountData", "AccountRef");
-        mapa.put("PoolReport", "PoolReportRef");
-        files[input] = "C:\\Users\\osolodovnikov\\workingdir\\FATCA\\ComparisonTool\\G5ME2G.00007.ME.8402021060708180000_1_Linearised.xml";
-        files[output] = "C:\\Users\\osolodovnikov\\workingdir\\FATCA\\ComparisonTool\\G5ME2G.00007.ME.8402021060708180000_2_Lineriased.xml";
+        Map<String, String[]> params = new HashMap<>();
+        params.put("FIReturn", new String[]{"FIReturnRef", "2"});
+        params.put("AccountData", new String[]{"AccountRef", "2"});
+        params.put("PoolReport", new String[]{"PoolReportRef", "2"});
+        params.put("HolderTaxInfo", new String[]{"TIN", "1"});
+        files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized1.xml";
+        files[output] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml";
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         List[] resElements = new List[]{new ArrayList(), new ArrayList()};
 //        get all elements from file into resElementsIn array
@@ -58,9 +52,23 @@ class XML_comparatorNEW {
                         current = current.getParentNode();
 //                  Get Reference value into the parsed string
                         String reference = "";
-                        if (mapa.containsKey(current.getNodeName()) && current.getFirstChild().getFirstChild().getNodeName().equals(mapa.get(current.getNodeName()))) {
-                            reference = current.getFirstChild().getFirstChild().getTextContent();
-//                            System.out.println("reference : " + current.getFirstChild().getFirstChild().getNodeName() + reference);
+                        if (params.containsKey(current.getNodeName())) {
+//                    get subnode
+                            Integer elementLevel = Integer.valueOf(params.get(current.getNodeName())[1]);
+                            Node subElement = current;
+                            for (int j = 0; j < elementLevel; j++) {
+                                subElement = subElement.getFirstChild();
+                            }
+                            if (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
+                                System.out.println(subElement.getNodeName());
+                                reference = subElement.getTextContent();
+                                System.out.println(reference);
+                            } else {
+                                while (subElement.getNodeName() != params.get(current.getNodeName())[0] && !(subElement instanceof Element)) {
+                                    subElement = subElement.getNextSibling();
+                                }
+                                reference = "N/A";
+                            }
                         }
                         StringBuilder attributeParent = new StringBuilder();
                         if (current.hasAttributes() && !current.getParentNode().getNodeName().equals("#document")) {
