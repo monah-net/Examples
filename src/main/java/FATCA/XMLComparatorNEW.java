@@ -33,7 +33,7 @@ class XML_comparatorNEW {
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         List[] resElements = new List[]{new ArrayList(), new ArrayList()};
 //        get all elements from file into resElementsIn array
-        for (int fileCounter = 0; fileCounter < 2; fileCounter++) {
+        for (int fileCounter = 0; fileCounter < files.length; fileCounter++) {
             File fileInput = new File(files[fileCounter]);
             Document javaParsedInput = dBuilderInput.parse(fileInput);
             NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");

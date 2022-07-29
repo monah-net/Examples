@@ -15,10 +15,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class XMLComparator_NEW_UPD {
+public class XMLComparator_IterableElementsGetter {
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
         //get all elements, that have more than one the same child elements
-        File inputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml");
+        File inputXmlFile = new File("C:\\Users\\osolodovnikov\\workingdir\\FATCA\\ComparisonTool\\G5ME2G.00007.ME.8402021060708180000_3_Lineriased.xml");
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
         NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
