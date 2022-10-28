@@ -14,14 +14,16 @@ import java.util.stream.Collectors;
 
 class XML_comparatorNEW {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+        final String MULTI = "MULTI";
+        final String SINGLE = "SINGLE";
         final int input = 0;
         final int output = 1;
         String[] files = new String[2];
         Map<String, String[]> params = new HashMap<>();
-        params.put("FIReturn", new String[]{"FIReturnRef", "2"});
-        params.put("AccountData", new String[]{"AccountRef", "2"});
-        params.put("PoolReport", new String[]{"PoolReportRef", "2"});
-        params.put("HolderTaxInfo", new String[]{"TIN", "1"});
+        params.put("FIReturn", new String[]{"FIReturnRef", "2",SINGLE});
+        params.put("AccountData", new String[]{"AccountRef", "2",SINGLE});
+        params.put("PoolReport", new String[]{"PoolReportRef", "2",SINGLE});
+        params.put("HolderTaxInfo", new String[]{"TIN", "1",MULTI});
         files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized1.xml";
         files[output] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml";
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
