@@ -24,7 +24,7 @@ class XML_comparatorNEW {
         params.put("AccountData", new String[]{"AccountRef", "2",SINGLE});
         params.put("PoolReport", new String[]{"PoolReportRef", "2",SINGLE});
         params.put("HolderTaxInfo", new String[]{"TIN", "1",MULTI});
-        files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized1.xml";
+        files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml";
         files[output] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml";
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         List[] resElements = new List[]{new ArrayList(), new ArrayList()};
@@ -58,13 +58,30 @@ class XML_comparatorNEW {
 //                    get subnode
                             Integer elementLevel = Integer.valueOf(params.get(current.getNodeName())[1]);
                             Node subElement = current;
+//                            System.out.println("subElement " + subElement);
                             for (int j = 0; j < elementLevel; j++) {
                                 subElement = subElement.getFirstChild();
                             }
                             if (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
-                                System.out.println(subElement.getNodeName());
-                                reference = subElement.getTextContent();
-                                System.out.println(reference);
+//                                System.out.println(subElement.getNodeName());
+                                if (params.get(current.getNodeName())[2] == SINGLE){
+                                reference = subElement.getTextContent();}
+                                else if (params.get(current.getNodeName())[2] == MULTI){
+                                    StringBuilder multiReferenceStr = new StringBuilder();
+                                    List multiReference = new ArrayList<>();
+                                    String test = new String();
+                                    while(subElement.getNodeName() == params.get(current.getNodeName())[0]){
+                                        multiReference.add(subElement.getTextContent());
+                                        subElement = subElement.getNextSibling();
+                                        test = subElement.getTextContent();
+                                    }
+                                    Collections.sort(multiReference);
+                                    for (int j = 0; j < multiReference.size(); j++) {
+                                        multiReferenceStr.append(multiReference.get(j));
+                                    }
+                                    reference = multiReferenceStr.toString();
+                                }
+                                System.out.println("reference" + reference);
                             } else {
                                 while (subElement.getNodeName() != params.get(current.getNodeName())[0] && !(subElement instanceof Element)) {
                                     subElement = subElement.getNextSibling();
