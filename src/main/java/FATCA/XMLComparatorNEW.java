@@ -1,6 +1,5 @@
 package FATCA;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -10,12 +9,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 class XML_comparatorNEW {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+        System.out.println(xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml","/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml"));
+    }
+
+    static boolean xmlEquals(String file1,String file2) throws ParserConfigurationException, IOException, SAXException {
+        boolean compareResult = true;
         final String MULTI = "MULTI";
         final String SINGLE = "SINGLE";
+        final String ALL_SIBLINGS = "ALL_SIBLINGS";
         final int input = 0;
         final int output = 1;
         String[] files = new String[2];
@@ -23,13 +27,14 @@ class XML_comparatorNEW {
         params.put("FIReturn", new String[]{"FIReturnRef", "2",SINGLE});
         params.put("AccountData", new String[]{"AccountRef", "2",SINGLE});
         params.put("PoolReport", new String[]{"PoolReportRef", "2",SINGLE});
-        params.put("HolderTaxInfo", new String[]{"TIN", "1",MULTI});
-        files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml";
-        files[output] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml";
+//        params.put("HolderTaxInfo", new String[]{"TIN", "1",MULTI});
+        params.put("HolderTaxInfo", new String[]{"TIN", "1",ALL_SIBLINGS});
+        files[input] = file1;
+        files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         List[] resElements = new List[]{new ArrayList(), new ArrayList()};
 //        get all elements from file into resElementsIn array
-        for (int fileCounter = 0; fileCounter < 2; fileCounter++) {
+        for (int fileCounter = 0; fileCounter < files.length; fileCounter++) {
             File fileInput = new File(files[fileCounter]);
             Document javaParsedInput = dBuilderInput.parse(fileInput);
             NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
@@ -65,7 +70,7 @@ class XML_comparatorNEW {
                             if (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
 //                                System.out.println(subElement.getNodeName());
                                 if (params.get(current.getNodeName())[2] == SINGLE){
-                                reference = subElement.getTextContent();}
+                                    reference = subElement.getTextContent();}
                                 else if (params.get(current.getNodeName())[2] == MULTI){
                                     StringBuilder multiReferenceStr = new StringBuilder();
                                     List multiReference = new ArrayList<>();
@@ -134,5 +139,9 @@ class XML_comparatorNEW {
         System.out.println(resElements[output].isEmpty());
         System.out.println(resElements[output].size());
         System.out.println(resElements[output]);
+        if (!(resElements[input].isEmpty() && resElements[output].isEmpty())){
+            compareResult = false;
+        }
+        return compareResult;
     }
 }
