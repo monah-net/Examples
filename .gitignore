@@ -8,5 +8,5 @@ lib/
 src/Fatcatest/
 /out/
 ~/Examples.iml
-.idea/
-target/
+/target/
+/.idea/
