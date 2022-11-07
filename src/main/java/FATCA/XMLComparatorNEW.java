@@ -60,7 +60,7 @@ class XML_comparatorNEW {
 //                  Get Reference value into the parsed string
                         String reference = "";
                         if (params.containsKey(current.getNodeName())) {
-//                    get subnode
+//                    get subNode
                             Integer elementLevel = Integer.valueOf(params.get(current.getNodeName())[1]);
                             Node subElement = current;
 //                            System.out.println("subElement " + subElement);
@@ -117,22 +117,12 @@ class XML_comparatorNEW {
             }
         }
 
-//        Compairing arrays
-
+//        Comparing arrays
         List resElementsInTemp = new ArrayList();
         List resElementsOutTemp = new ArrayList();
-//        Set<String> dublicates = new HashSet<String>(resElements[output]);
-//        System.out.println("dublicates" + dublicates.size());
-//        System.out.println("output size" + resElements[output].size());
-//        System.out.println(resElements[output]);
-//        System.out.println(dublicates);
         resElementsInTemp.addAll(resElements[input]);
         resElementsOutTemp.addAll(resElements[output]);
-//        System.out.println(resElementsInTemp);
-//        System.out.println(resElementsOutTemp);
         resElements[output].removeAll(resElementsInTemp);
-//        System.out.println(resElements[input]);
-//        System.out.println(resElements[output]);
         System.out.println(resElements[input]);
         System.out.println(resElements[input].isEmpty());
         System.out.println(resElements[input].size());
