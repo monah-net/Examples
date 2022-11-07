@@ -12,7 +12,7 @@ import java.util.*;
 
 class XML_comparatorNEW {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-        System.out.println(xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml","/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml"));
+        System.out.println("TEST");
     }
 
     static boolean xmlEquals(String file1,String file2) throws ParserConfigurationException, IOException, SAXException {
