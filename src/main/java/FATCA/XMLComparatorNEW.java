@@ -1,6 +1,5 @@
 package FATCA;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -10,24 +9,32 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 class XML_comparatorNEW {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+        System.out.println("TEST");
+    }
+
+    static boolean xmlEquals(String file1,String file2) throws ParserConfigurationException, IOException, SAXException {
+        boolean compareResult = true;
+        final String MULTI = "MULTI";
+        final String SINGLE = "SINGLE";
+        final String ALL_SIBLINGS = "ALL_SIBLINGS";
         final int input = 0;
         final int output = 1;
         String[] files = new String[2];
         Map<String, String[]> params = new HashMap<>();
-        params.put("FIReturn", new String[]{"FIReturnRef", "2"});
-        params.put("AccountData", new String[]{"AccountRef", "2"});
-        params.put("PoolReport", new String[]{"PoolReportRef", "2"});
-        params.put("HolderTaxInfo", new String[]{"TIN", "1"});
-        files[input] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized1.xml";
-        files[output] = "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml";
+        params.put("FIReturn", new String[]{"FIReturnRef", "2",SINGLE});
+        params.put("AccountData", new String[]{"AccountRef", "2",SINGLE});
+        params.put("PoolReport", new String[]{"PoolReportRef", "2",SINGLE});
+//        params.put("HolderTaxInfo", new String[]{"TIN", "1",MULTI});
+        params.put("HolderTaxInfo", new String[]{"TIN", "1",ALL_SIBLINGS});
+        files[input] = file1;
+        files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         List[] resElements = new List[]{new ArrayList(), new ArrayList()};
 //        get all elements from file into resElementsIn array
-        for (int fileCounter = 0; fileCounter < 2; fileCounter++) {
+        for (int fileCounter = 0; fileCounter < files.length; fileCounter++) {
             File fileInput = new File(files[fileCounter]);
             Document javaParsedInput = dBuilderInput.parse(fileInput);
             NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
@@ -53,16 +60,33 @@ class XML_comparatorNEW {
 //                  Get Reference value into the parsed string
                         String reference = "";
                         if (params.containsKey(current.getNodeName())) {
-//                    get subnode
+//                    get subNode
                             Integer elementLevel = Integer.valueOf(params.get(current.getNodeName())[1]);
                             Node subElement = current;
+//                            System.out.println("subElement " + subElement);
                             for (int j = 0; j < elementLevel; j++) {
                                 subElement = subElement.getFirstChild();
                             }
                             if (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
-                                System.out.println(subElement.getNodeName());
-                                reference = subElement.getTextContent();
-                                System.out.println(reference);
+//                                System.out.println(subElement.getNodeName());
+                                if (params.get(current.getNodeName())[2] == SINGLE){
+                                    reference = subElement.getTextContent();}
+                                else if (params.get(current.getNodeName())[2] == MULTI){
+                                    StringBuilder multiReferenceStr = new StringBuilder();
+                                    List multiReference = new ArrayList<>();
+                                    String test = new String();
+                                    while(subElement.getNodeName() == params.get(current.getNodeName())[0]){
+                                        multiReference.add(subElement.getTextContent());
+                                        subElement = subElement.getNextSibling();
+                                        test = subElement.getTextContent();
+                                    }
+                                    Collections.sort(multiReference);
+                                    for (int j = 0; j < multiReference.size(); j++) {
+                                        multiReferenceStr.append(multiReference.get(j));
+                                    }
+                                    reference = multiReferenceStr.toString();
+                                }
+                                System.out.println("reference" + reference);
                             } else {
                                 while (subElement.getNodeName() != params.get(current.getNodeName())[0] && !(subElement instanceof Element)) {
                                     subElement = subElement.getNextSibling();
@@ -93,27 +117,21 @@ class XML_comparatorNEW {
             }
         }
 
-//        Compairing arrays
-
+//        Comparing arrays
         List resElementsInTemp = new ArrayList();
         List resElementsOutTemp = new ArrayList();
-//        Set<String> dublicates = new HashSet<String>(resElements[output]);
-//        System.out.println("dublicates" + dublicates.size());
-//        System.out.println("output size" + resElements[output].size());
-//        System.out.println(resElements[output]);
-//        System.out.println(dublicates);
         resElementsInTemp.addAll(resElements[input]);
         resElementsOutTemp.addAll(resElements[output]);
-//        System.out.println(resElementsInTemp);
-//        System.out.println(resElementsOutTemp);
         resElements[output].removeAll(resElementsInTemp);
-//        System.out.println(resElements[input]);
-//        System.out.println(resElements[output]);
         System.out.println(resElements[input]);
         System.out.println(resElements[input].isEmpty());
         System.out.println(resElements[input].size());
         System.out.println(resElements[output].isEmpty());
         System.out.println(resElements[output].size());
         System.out.println(resElements[output]);
+        if (!(resElements[input].isEmpty() && resElements[output].isEmpty())){
+            compareResult = false;
+        }
+        return compareResult;
     }
 }

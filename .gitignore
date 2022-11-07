@@ -6,3 +6,7 @@
 gen
 lib/
 src/Fatcatest/
+/out/
+~/Examples.iml
+/target/
+/.idea/
