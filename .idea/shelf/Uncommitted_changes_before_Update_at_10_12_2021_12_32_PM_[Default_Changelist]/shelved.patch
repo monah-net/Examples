@@ -1,0 +1,101 @@
+Index: Examples.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule=\"true\" type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" LANGUAGE_LEVEL=\"JDK_1_8\">\r\n    <output url=\"file://$MODULE_DIR$/target/classes\" />\r\n    <output-test url=\"file://$MODULE_DIR$/target/test-classes\" />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/java\" isTestSource=\"false\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/main/resources\" type=\"java-resource\" />\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src/test/java\" isTestSource=\"true\" />\r\n      <excludeFolder url=\"file://$MODULE_DIR$/target\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"module-library\" scope=\"TEST\">\r\n      <library name=\"JUnit4\">\r\n        <CLASSES>\r\n          <root url=\"jar://$MODULE_DIR$/lib/junit-4.12.jar!/\" />\r\n          <root url=\"jar://$MODULE_DIR$/lib/hamcrest-core-1.3.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-api:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-commons:1.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-params:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-engine:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-engine:1.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: commons-codec:commons-codec:1.13\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.osgi:org.osgi.framework:1.8.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: xerces:xercesImpl:2.9.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: xml-apis:xml-apis:1.3.04\" level=\"project\" />\r\n    <orderEntry type=\"library\" name=\"Maven: org.w3c:dom:2.3.0-jaxb-1.0.6\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: junit:junit:4.13.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.hamcrest:hamcrest-core:1.3\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-api:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.opentest4j:opentest4j:1.2.0\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-commons:1.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.apiguardian:apiguardian-api:1.1.2\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-params:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.jupiter:junit-jupiter-engine:5.8.1\" level=\"project\" />\r\n    <orderEntry type=\"library\" scope=\"TEST\" name=\"Maven: org.junit.platform:junit-platform-engine:1.8.1\" level=\"project\" />\r\n  </component>\r\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Examples.iml b/Examples.iml
+--- a/Examples.iml	(revision ccf7c3ba35c46bcec9b1c80bd2d50c71433e332f)
++++ b/Examples.iml	(date 1633971444082)
+@@ -21,16 +21,10 @@
+         <SOURCES />
+       </library>
+     </orderEntry>
+-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter:5.8.1" level="project" />
+-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.1" level="project" />
+-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.8.1" level="project" />
+-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-params:5.8.1" level="project" />
+-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.1" level="project" />
+-    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.8.1" level="project" />
+     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.13" level="project" />
+     <orderEntry type="library" name="Maven: org.osgi:org.osgi.framework:1.8.0" level="project" />
+-    <orderEntry type="library" name="Maven: xerces:xercesImpl:2.9.1" level="project" />
+-    <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.3.04" level="project" />
++    <orderEntry type="library" name="Maven: xerces:xercesImpl:2.12.1" level="project" />
++    <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
+     <orderEntry type="library" name="Maven: org.w3c:dom:2.3.0-jaxb-1.0.6" level="project" />
+     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13.2" level="project" />
+     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+Index: src/main/java/FATCA/XMLComparatorParametersPart.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package FATCA;\r\n\r\nimport org.w3c.dom.Document;\r\nimport org.w3c.dom.Node;\r\nimport org.w3c.dom.NodeList;\r\nimport org.xml.sax.SAXException;\r\n\r\nimport javax.xml.parsers.DocumentBuilder;\r\nimport javax.xml.parsers.DocumentBuilderFactory;\r\nimport javax.xml.parsers.ParserConfigurationException;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.util.*;\r\n\r\npublic class XMLComparatorParametersPart {\r\n    private static String SUBOWNER = \"ControllingPerson\";\r\n\r\n    public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {\r\n        File inputXmlFile = new File(\"/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_Lineriased.xml\");\r\n        DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();\r\n        Document javaParsedInput = dBuilderInput.parse(inputXmlFile);\r\n        NodeList allElementsIn = javaParsedInput.getElementsByTagName(\"*\");\r\n        Map<String, List<String>> params = new HashMap<String, List<String>>();\r\n        params.put(\"ControllingPerson\", new ArrayList<String>(Arrays.asList(\"Person\", \"HolderTaxInfo\", \"TIN\")));\r\n//        System.out.println(params.get(\"ControllingPerson\").get(2));\r\n        String key = null;\r\n        for (int i = 0; i < allElementsIn.getLength(); i++) {\r\n            Node currentNode = allElementsIn.item(i);\r\n            if (currentNode.getNodeName() == SUBOWNER) {\r\n                NodeList list = currentNode.getChildNodes();\r\n                for (int j = 0; j < list.getLength(); j++) {\r\n                    if (currentNode.getFirstChild().getNodeName() == params.get(SUBOWNER).get(0)) {\r\n                        currentNode = currentNode.getFirstChild();\r\n                        System.out.println(\"Person is here!!!\");\r\n                        NodeList personList = currentNode.getChildNodes();\r\n                        for (int k = 0; k < personList.getLength(); k++) {\r\n                            currentNode = personList.item(k);\r\n                            if(currentNode.getNodeType() == Node.ELEMENT_NODE) {\r\n                                if (personList.item(k).getNodeName() == params.get(SUBOWNER).get(1)) {\r\n                                    currentNode = personList.item(k);\r\n                                    System.out.println(\"Tax info is here\");\r\n                                    if (personList.item(k).getNodeName() == params.get(SUBOWNER).get(2)){\r\n                                        key = currentNode.getTextContent();\r\n                                        break;\r\n                                    }\r\n                                } else {\r\n                                    currentNode = currentNode.getNextSibling();\r\n                                }\r\n                            } else {\r\n                                k++;\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        System.out.println(key);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/FATCA/XMLComparatorParametersPart.java b/src/main/java/FATCA/XMLComparatorParametersPart.java
+--- a/src/main/java/FATCA/XMLComparatorParametersPart.java	(revision ccf7c3ba35c46bcec9b1c80bd2d50c71433e332f)
++++ b/src/main/java/FATCA/XMLComparatorParametersPart.java	(date 1634034560096)
+@@ -10,13 +10,17 @@
+ import javax.xml.parsers.ParserConfigurationException;
+ import java.io.File;
+ import java.io.IOException;
+-import java.util.*;
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
+ 
+ public class XMLComparatorParametersPart {
+     private static String SUBOWNER = "ControllingPerson";
+ 
+     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+-        File inputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_Lineriased.xml");
++        File inputXmlFile = new File("U:\\XMLSchema\\xml_files\\tst_case1\\G5ME2G.00007.ME.8402021060708180000_CP_Linearised.xml");
+         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
+         NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
+Index: .idea/libraries/Maven__xml_apis_xml_apis_1_3_04.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__xml_apis_xml_apis_1_3_04.xml b/.idea/libraries/Maven__xml_apis_xml_apis_1_3_04.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__xml_apis_xml_apis_1_3_04.xml	(revision ccf7c3ba35c46bcec9b1c80bd2d50c71433e332f)
++++ /dev/null	(revision ccf7c3ba35c46bcec9b1c80bd2d50c71433e332f)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: xml-apis:xml-apis:1.3.04">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/libraries/Maven__xerces_xercesImpl_2_9_1.xml
+===================================================================
+diff --git a/.idea/libraries/Maven__xerces_xercesImpl_2_9_1.xml b/.idea/libraries/Maven__xerces_xercesImpl_2_9_1.xml
+deleted file mode 100644
+--- a/.idea/libraries/Maven__xerces_xercesImpl_2_9_1.xml	(revision ccf7c3ba35c46bcec9b1c80bd2d50c71433e332f)
++++ /dev/null	(revision ccf7c3ba35c46bcec9b1c80bd2d50c71433e332f)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="Maven: xerces:xercesImpl:2.9.1">
+-    <CLASSES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xerces/xercesImpl/2.9.1/xercesImpl-2.9.1.jar!/" />
+-    </CLASSES>
+-    <JAVADOC>
+-      <root url="jar://$MAVEN_REPOSITORY$/xerces/xercesImpl/2.9.1/xercesImpl-2.9.1-javadoc.jar!/" />
+-    </JAVADOC>
+-    <SOURCES>
+-      <root url="jar://$MAVEN_REPOSITORY$/xerces/xercesImpl/2.9.1/xercesImpl-2.9.1-sources.jar!/" />
+-    </SOURCES>
+-  </library>
+-</component>
+\ No newline at end of file
