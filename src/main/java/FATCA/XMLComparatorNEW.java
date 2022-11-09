@@ -10,13 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-class XML_comparatorNEW {
+class XML_comparatorNEW_UK {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-        System.out.println("TEST");
+//        System.out.println(xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized.xml", "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized_2.xml"));
     }
 
     static boolean xmlEquals(String file1,String file2) throws ParserConfigurationException, IOException, SAXException {
-        boolean compareResult = true;
+        boolean compareResult = false;
         final String MULTI = "MULTI";
         final String SINGLE = "SINGLE";
         final String ALL_SIBLINGS = "ALL_SIBLINGS";
@@ -27,8 +27,7 @@ class XML_comparatorNEW {
         params.put("FIReturn", new String[]{"FIReturnRef", "2",SINGLE});
         params.put("AccountData", new String[]{"AccountRef", "2",SINGLE});
         params.put("PoolReport", new String[]{"PoolReportRef", "2",SINGLE});
-//        params.put("HolderTaxInfo", new String[]{"TIN", "1",MULTI});
-        params.put("HolderTaxInfo", new String[]{"TIN", "1",ALL_SIBLINGS});
+        params.put("HolderTaxInfo", new String[]{"TIN", "1",SINGLE});
         files[input] = file1;
         files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -86,7 +85,7 @@ class XML_comparatorNEW {
                                     }
                                     reference = multiReferenceStr.toString();
                                 }
-                                System.out.println("reference" + reference);
+//                                System.out.println("reference" + reference);
                             } else {
                                 while (subElement.getNodeName() != params.get(current.getNodeName())[0] && !(subElement instanceof Element)) {
                                     subElement = subElement.getNextSibling();
@@ -116,21 +115,15 @@ class XML_comparatorNEW {
                 }
             }
         }
-
 //        Comparing arrays
         List resElementsInTemp = new ArrayList();
         List resElementsOutTemp = new ArrayList();
         resElementsInTemp.addAll(resElements[input]);
         resElementsOutTemp.addAll(resElements[output]);
         resElements[output].removeAll(resElementsInTemp);
-        System.out.println(resElements[input]);
-        System.out.println(resElements[input].isEmpty());
-        System.out.println(resElements[input].size());
-        System.out.println(resElements[output].isEmpty());
-        System.out.println(resElements[output].size());
-        System.out.println(resElements[output]);
-        if (!(resElements[input].isEmpty() && resElements[output].isEmpty())){
-            compareResult = false;
+        resElements[input].removeAll(resElementsOutTemp);
+        if (resElements[input].isEmpty() && resElements[output].isEmpty()){
+            compareResult = true; //Files are identical
         }
         return compareResult;
     }
