@@ -1,6 +1,5 @@
 package Tests;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 public class ReplaceExample {
     public static void main(String[] args) {
