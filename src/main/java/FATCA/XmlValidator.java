@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 public class XmlValidator {
     public static void main(String[] args) {
 
-        System.out.println("Result of validation : " + validateXMLSchema("U:\\XMLSchema\\Standard\\CRS\\2_0\\CrsXML_v2.0.xsd", "C:\\Users\\osolodovnikov\\workingdir\\xmlFiles\\MX2021MXABC821231AC7.20210609111400001.xml"));
+        System.out.println("Result of validation : " + validateXMLSchema("C:\\Users\\osolodovnikov\\workingdir\\FATCA\\XMLValidator\\All Schemes\\CN_Schema_updated_for PBOC requirements\\CN_Schema.xsd", "C:\\Users\\osolodovnikov\\workingdir\\FATCA\\XMLValidator\\Files\\cams.001.001.02RE123456321654982022P00000001.xml"));
 
     }
 

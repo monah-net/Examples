@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 public class XMLComparatorParametersPart {
-    private static String SUBOWNER = "ControllingPerson";
+    private static String  SUBOWNER = "ControllingPerson";
 
     public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-        File inputXmlFile = new File("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml");
+        File inputXmlFile = new File("U:\\XMLSchema\\xml_files\\tst_case1\\G5ME2G.00007.ME.8402021060708180000_CP_Linearised.xml");
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document javaParsedInput = dBuilderInput.parse(inputXmlFile);
         NodeList allElementsIn = javaParsedInput.getElementsByTagName("*");
