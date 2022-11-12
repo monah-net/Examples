@@ -28,6 +28,7 @@ class XML_comparatorNEW_UK {
         params.put("AccountData", new String[]{"AccountRef", "2",SINGLE});
         params.put("PoolReport", new String[]{"PoolReportRef", "2",SINGLE});
         params.put("HolderTaxInfo", new String[]{"TIN", "1",SINGLE});
+        params.put("PaymentData", new String[]{"PaymentCode", "1",SINGLE});
         files[input] = file1;
         files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();

@@ -13,9 +13,8 @@ class XML_comparatorNEW_UKTest {
     @Test
     @DisplayName("CHECK TWO FILES WITH DIFFERENCIES")
     void xmlEquals_Test_case1() throws ParserConfigurationException, IOException, SAXException {
-        assertAll(() -> assertEquals(false, XML_comparatorNEW_UK.xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml", "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_noAccRef_linearized2.xml")),
-                () -> assertEquals(true, XML_comparatorNEW_UK.xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml", "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/xml_files/origin_fatca_det_uk_CP_test_Lineriased.xml")),
-                () -> assertEquals(true, XML_comparatorNEW_UK.xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized.xml", "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized_2.xml")),
-                () -> assertEquals(false, XML_comparatorNEW_UK.xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case2DiffInResCountryCodes/origin_fatca_det_uk_CP_source.xml", "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case2DiffInResCountryCodes/origin_fatca_det_uk_CP_target.xml")));
+        assertAll(() -> assertEquals(true, XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case1_identical_files\\origin_fatca_det_uk_CP_linearized.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case1_identical_files\\origin_fatca_det_uk_CP_linearized_2.xml")),
+                () -> assertEquals(false, XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case2DiffInResCountryCodes\\origin_fatca_det_uk_CP_source.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case2DiffInResCountryCodes\\origin_fatca_det_uk_CP_target.xml")),
+                () -> assertEquals(false, XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case3_acc_payment_difference\\origin_GB_crs_Lineriased.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case3_acc_payment_difference\\origin_GB_crs_LineriasedUPD.xml")));
     }
 }
