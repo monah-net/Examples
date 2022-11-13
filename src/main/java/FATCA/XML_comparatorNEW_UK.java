@@ -12,23 +12,24 @@ import java.util.*;
 
 class XML_comparatorNEW_UK {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-//        System.out.println(xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized.xml", "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized_2.xml"));
+        System.out.println(xmlEquals("/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized.xml", "/Users/olegsolodovnikov/MyDocuments/FATCA/Comparator/case1_identical_files/origin_fatca_det_uk_CP_linearized_2.xml"));
     }
 
-    static boolean xmlEquals(String file1,String file2) throws ParserConfigurationException, IOException, SAXException {
+    static boolean xmlEquals(String file1, String file2) throws ParserConfigurationException, IOException, SAXException {
         boolean compareResult = false;
         final String MULTI = "MULTI";
         final String SINGLE = "SINGLE";
         final String ALL_SIBLINGS = "ALL_SIBLINGS";
+        final String ALL_CHILDS = "ALL_CHILDS";
         final int input = 0;
         final int output = 1;
         String[] files = new String[2];
         Map<String, String[]> params = new HashMap<>();
-        params.put("FIReturn", new String[]{"FIReturnRef", "2",SINGLE});
-        params.put("AccountData", new String[]{"AccountRef", "2",SINGLE});
-        params.put("PoolReport", new String[]{"PoolReportRef", "2",SINGLE});
-        params.put("HolderTaxInfo", new String[]{"TIN", "1",SINGLE});
-        params.put("PaymentData", new String[]{"PaymentCode", "1",SINGLE});
+        params.put("FIReturn", new String[]{"FIReturnRef", "2", SINGLE});
+        params.put("AccountData", new String[]{"AccountRef", "2", SINGLE});
+        params.put("PoolReport", new String[]{"PoolReportRef", "2", SINGLE});
+        params.put("HolderTaxInfo", new String[]{"TIN", "1", SINGLE});
+        params.put("PaymentData", new String[]{"ALL_CHILDS"});
         files[input] = file1;
         files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -61,37 +62,45 @@ class XML_comparatorNEW_UK {
                         String reference = "";
                         if (params.containsKey(current.getNodeName())) {
 //                    get subNode
-                            Integer elementLevel = Integer.valueOf(params.get(current.getNodeName())[1]);
                             Node subElement = current;
-//                            System.out.println("subElement " + subElement);
-                            for (int j = 0; j < elementLevel; j++) {
-                                subElement = subElement.getFirstChild();
-                            }
-                            if (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
-//                                System.out.println(subElement.getNodeName());
-                                if (params.get(current.getNodeName())[2] == SINGLE){
-                                    reference = subElement.getTextContent();}
-                                else if (params.get(current.getNodeName())[2] == MULTI){
-                                    StringBuilder multiReferenceStr = new StringBuilder();
-                                    List multiReference = new ArrayList<>();
-                                    String test = new String();
-                                    while(subElement.getNodeName() == params.get(current.getNodeName())[0]){
-                                        multiReference.add(subElement.getTextContent());
-                                        subElement = subElement.getNextSibling();
-                                        test = subElement.getTextContent();
-                                    }
-                                    Collections.sort(multiReference);
-                                    for (int j = 0; j < multiReference.size(); j++) {
-                                        multiReferenceStr.append(multiReference.get(j));
-                                    }
-                                    reference = multiReferenceStr.toString();
+                            if (params.get(current.getNodeName())[0] == ALL_CHILDS) {
+                                NodeList allChilds = subElement.getChildNodes();
+                                List references = new ArrayList();
+                                for (int j = 0; j < allChilds.getLength(); j++) {
+                                    Node nodeTmpAllChilds = allChilds.item(j);
+                                    references.add(nodeTmpAllChilds.getTextContent());
                                 }
-//                                System.out.println("reference" + reference);
+                                Collections.sort(references);
+                                reference = references.toString();
                             } else {
-                                while (subElement.getNodeName() != params.get(current.getNodeName())[0] && !(subElement instanceof Element)) {
-                                    subElement = subElement.getNextSibling();
+                                Integer elementLevel = Integer.valueOf(params.get(current.getNodeName())[1]);
+//                            System.out.println("subElement " + subElement);
+                                for (int j = 0; j < elementLevel; j++) {
+                                    subElement = subElement.getFirstChild();
                                 }
-                                reference = "N/A";
+                                if (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
+//                                System.out.println(subElement.getNodeName());
+                                    if (params.get(current.getNodeName())[2] == SINGLE) {
+                                        reference = subElement.getTextContent();
+                                    } else if (params.get(current.getNodeName())[2] == MULTI) {
+                                        StringBuilder multiReferenceStr = new StringBuilder();
+                                        List multiReference = new ArrayList<>();
+                                        while (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
+                                            multiReference.add(subElement.getTextContent());
+                                            subElement = subElement.getNextSibling();
+                                        }
+                                        Collections.sort(multiReference);
+                                        for (int j = 0; j < multiReference.size(); j++) {
+                                            multiReferenceStr.append(multiReference.get(j));
+                                        }
+                                        reference = multiReferenceStr.toString();
+                                    }
+                                } else {
+                                    while (subElement.getNodeName() != params.get(current.getNodeName())[0] && !(subElement instanceof Element)) {
+                                        subElement = subElement.getNextSibling();
+                                    }
+                                    reference = "N/A";
+                                }
                             }
                         }
                         StringBuilder attributeParent = new StringBuilder();
@@ -123,7 +132,7 @@ class XML_comparatorNEW_UK {
         resElementsOutTemp.addAll(resElements[output]);
         resElements[output].removeAll(resElementsInTemp);
         resElements[input].removeAll(resElementsOutTemp);
-        if (resElements[input].isEmpty() && resElements[output].isEmpty()){
+        if (resElements[input].isEmpty() && resElements[output].isEmpty()) {
             compareResult = true; //Files are identical
         }
         return compareResult;
