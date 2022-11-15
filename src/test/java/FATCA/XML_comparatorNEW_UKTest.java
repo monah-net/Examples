@@ -11,6 +11,7 @@ class XML_comparatorNEW_UKTest {
     void xmlEquals_Test_case1() {
         assertAll(() -> assertTrue(XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case1_identical_files\\origin_fatca_det_uk_CP_linearized.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case1_identical_files\\origin_fatca_det_uk_CP_linearized_2.xml")),
                 () -> assertFalse(XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case2DiffInResCountryCodes\\origin_fatca_det_uk_CP_source.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case2DiffInResCountryCodes\\origin_fatca_det_uk_CP_target.xml")),
-                () -> assertFalse(XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case3_acc_payment_difference\\origin_GB_crs_Lineriased.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case3_acc_payment_difference\\origin_GB_crs_LineriasedUPD.xml")));
+                () -> assertFalse(XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case3_acc_payment_difference\\origin_GB_crs_Lineriased.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case3_acc_payment_difference\\origin_GB_crs_LineriasedUPD.xml")),
+                () -> assertFalse(XML_comparatorNEW_UK.xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case4\\origin_GB_crs_Lineriased_ex1.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case4\\origin_GB_crs_Lineriased_ex2.xml")));
     }
 }
