@@ -12,7 +12,7 @@ import java.util.*;
 
 class XML_comparatorNEW_UK {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-//        System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case4\\origin_GB_crs_Lineriased_ex2.xml", "C:\\Users\\osolodovnikov\\workingdir\\Comparator\\case4\\origin_GB_crs_Lineriased_ex1.xml"));
+        System.out.println(xmlEquals("C:\\Users\\007\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml", "C:\\Users\\007\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml"));
     }
 
     static boolean xmlEquals(String file1, String file2) throws ParserConfigurationException, IOException, SAXException {
@@ -25,12 +25,13 @@ class XML_comparatorNEW_UK {
         final int output = 1;
         String[] files = new String[2];
         Map<String, String[]> params = new HashMap<>();
-        params.put("FIReturn", new String[]{"FIReturnRef", "2", SINGLE});
-        params.put("AccountData", new String[]{"AccountRef", "2", SINGLE});
-        params.put("PoolReport", new String[]{"PoolReportRef", "2", SINGLE});
-        params.put("HolderTaxInfo", new String[]{"TIN", "1", SINGLE});
-        params.put("HolderInfo", new String[]{"IN", "1", SINGLE});
-        params.put("PaymentData", new String[]{"ALL_CHILDS"});
+//        params.put("FIReturn", new String[]{"FIReturnRef", "2", SINGLE});
+//        params.put("AccountData", new String[]{"AccountRef", "2", SINGLE});
+//        params.put("PoolReport", new String[]{"PoolReportRef", "2", SINGLE});
+//        params.put("HolderTaxInfo", new String[]{"TIN", "1", SINGLE});
+//        params.put("HolderInfo", new String[]{"IN", "1", SINGLE});
+//        params.put("PaymentData", new String[]{ALL_CHILDS});
+        params.put("HolderTaxInfo", new String[]{ALL_CHILDS});
         files[input] = file1;
         files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();

@@ -108,7 +108,7 @@
                     <ControllingPerson>
                         <Person>
                             <FirstName>Jhones</FirstName>
-                            <MiddleName>Junior</MiddleName>
+                            <MiddleName>Junior2</MiddleName>
                             <LastName>Jhon</LastName>
                             <Address>
                                 <BuildingIdentifier>1</BuildingIdentifier>
@@ -125,7 +125,7 @@
                     <ControllingPerson>
                         <Person>
                             <FirstName>Jhones2</FirstName>
-                            <MiddleName>Junior2</MiddleName>
+                            <MiddleName>Junior</MiddleName>
                             <LastName>Jhon2</LastName>
                             <Address>
                                 <BuildingIdentifier>1</BuildingIdentifier>
