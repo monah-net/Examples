@@ -19,19 +19,18 @@ class XML_comparatorNEW_UK {
         boolean compareResult = false;
         final String MULTI = "MULTI";
         final String SINGLE = "SINGLE";
-        final String ALL_SIBLINGS = "ALL_SIBLINGS";
         final String ALL_CHILDS = "ALL_CHILDS";
+        final String ALL_CONTENT = "ALL_CONTENT";
         final int input = 0;
         final int output = 1;
         String[] files = new String[2];
         Map<String, String[]> params = new HashMap<>();
-//        params.put("FIReturn", new String[]{"FIReturnRef", "2", SINGLE});
-//        params.put("AccountData", new String[]{"AccountRef", "2", SINGLE});
-//        params.put("PoolReport", new String[]{"PoolReportRef", "2", SINGLE});
-//        params.put("HolderTaxInfo", new String[]{"TIN", "1", SINGLE});
-//        params.put("HolderInfo", new String[]{"IN", "1", SINGLE});
-//        params.put("PaymentData", new String[]{ALL_CHILDS});
-        params.put("HolderTaxInfo", new String[]{ALL_CHILDS});
+        params.put("FIReturn", new String[]{"FIReturnRef", "2", SINGLE});
+        params.put("AccountData", new String[]{"AccountRef", "2", SINGLE});
+        params.put("PoolReport", new String[]{"PoolReportRef", "2", SINGLE});
+        params.put("HolderTaxInfo", new String[]{"TIN", "1", SINGLE});
+        params.put("HolderInfo", new String[]{"IN", "1", SINGLE});
+        params.put("ControllingPerson", new String[]{"HolderTaxInfo", "2", ALL_CHILDS});
         files[input] = file1;
         files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -60,7 +59,7 @@ class XML_comparatorNEW_UK {
                     String currElemName = current.getNodeName() + attribute + ":" + current.getTextContent();
                     while (!current.getParentNode().getNodeName().equals("#document")) {
                         current = current.getParentNode();
-//                  Get Reference value into the parsed string
+//                  Get Reference value into the parsed string (need to add attributes to refernces also)
                         String reference = "";
                         if (params.containsKey(current.getNodeName())) {
 //                    get subNode
