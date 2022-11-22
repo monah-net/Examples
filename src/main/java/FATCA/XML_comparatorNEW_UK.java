@@ -12,7 +12,7 @@ import java.util.*;
 
 class XML_comparatorNEW_UK {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-        System.out.println(xmlEquals("C:\\Users\\007\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml", "C:\\Users\\007\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml"));
+        System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml", "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml"));
     }
 
     static boolean xmlEquals(String file1, String file2) throws ParserConfigurationException, IOException, SAXException {
@@ -30,7 +30,7 @@ class XML_comparatorNEW_UK {
         params.put("PoolReport", new String[]{"PoolReportRef", "2", SINGLE});
         params.put("HolderTaxInfo", new String[]{"TIN", "1", SINGLE});
         params.put("HolderInfo", new String[]{"IN", "1", SINGLE});
-        params.put("ControllingPerson", new String[]{"HolderTaxInfo", "2", ALL_CHILDS});
+        params.put("ControllingPerson", new String[]{"HolderTaxInfo", "2", ALL_CONTENT});
         files[input] = file1;
         files[output] = file2;
         DocumentBuilder dBuilderInput = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -59,7 +59,7 @@ class XML_comparatorNEW_UK {
                     String currElemName = current.getNodeName() + attribute + ":" + current.getTextContent();
                     while (!current.getParentNode().getNodeName().equals("#document")) {
                         current = current.getParentNode();
-//                  Get Reference value into the parsed string (need to add attributes to refernces also)
+//                  Get Reference value into the parsed string (need to add attributes to references also)
                         String reference = "";
                         if (params.containsKey(current.getNodeName())) {
 //                    get subNode
@@ -79,11 +79,16 @@ class XML_comparatorNEW_UK {
                                 for (int j = 0; j < elementLevel; j++) {
                                     subElement = subElement.getFirstChild();
                                 }
-                                if (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
+                                while (subElement.getNodeName() != params.get(current.getNodeName())[0]) {
+                                    subElement = subElement.getNextSibling();
+                                }
+                                if (subElement.getNodeName() == params.get(current.getNodeName())[0]) { //check if that element needs reference
 //                                System.out.println(subElement.getNodeName());
                                     if (params.get(current.getNodeName())[2] == SINGLE) {
                                         reference = subElement.getTextContent();
+                                        //attribute part
                                     } else if (params.get(current.getNodeName())[2] == MULTI) {
+                                        //add attribute part
                                         StringBuilder multiReferenceStr = new StringBuilder();
                                         List multiReference = new ArrayList<>();
                                         while (subElement.getNodeName() == params.get(current.getNodeName())[0]) {
@@ -95,11 +100,20 @@ class XML_comparatorNEW_UK {
                                             multiReferenceStr.append(multiReference.get(j));
                                         }
                                         reference = multiReferenceStr.toString();
+                                    } else if(params.get(current.getNodeName())[2] == ALL_CONTENT){
+                                        NodeList subElemChilds = subElement.getChildNodes();
+                                        List references = new ArrayList();
+                                        for (int j = 0; j < subElemChilds.getLength(); j++) {
+                                            Node subElemChild = subElemChilds.item(j);
+                                            List subElemChildAttrList = new ArrayList<>();
+                                            if (subElemChild.hasAttributes()){
+                                                NamedNodeMap subElemChildAttr = subElemChild.getAttributes();
+                                                Collections.addAll(subElemChildAttrList,subElemChildAttr);
+                                                System.out.println(subElemChildAttrList);
+                                            }
+                                        }
                                     }
                                 } else {
-                                    while (subElement.getNodeName() != params.get(current.getNodeName())[0] && !(subElement instanceof Element)) {
-                                        subElement = subElement.getNextSibling();
-                                    }
                                     reference = "N/A";
                                 }
                             }
