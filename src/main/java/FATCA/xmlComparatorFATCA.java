@@ -10,9 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-class XML_comparatorNEW_UK {
+class xmlComparatorFATCA {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-        System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml", "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xml_files\\origin_fatca_det_uk_CP_LineriasedCHECK1.xml"));
+        System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case1_identical_files\\origin_fatca_det_uk_CP_linearized.xml", "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case1_identical_files\\origin_fatca_det_uk_CP_linearized_2.xml"));
+//        System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case4\\origin_GB_crs_Lineriased_ex1.xml", "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case4\\origin_GB_crs_Lineriased_ex2.xml"));
+//        System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case3_acc_payment_difference\\origin_GB_crs_Lineriased.xml", "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case3_acc_payment_difference\\origin_GB_crs_LineriasedUPD.xml"));
+//        System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case4\\origin_GB_crs_Lineriased_ex1.xml", "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case4\\origin_GB_crs_Lineriased_ex2.xml"));
+       /* System.out.println(xmlEquals("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case4\\origin_GB_crs_Lineriased_ex1.xml", "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case4\\origin_GB_crs_Lineriased_ex2.xml"));*/
     }
 
     static boolean xmlEquals(String file1, String file2) throws ParserConfigurationException, IOException, SAXException {
@@ -80,7 +84,9 @@ class XML_comparatorNEW_UK {
                                     subElement = subElement.getFirstChild();
                                 }
                                 while (subElement.getNodeName() != params.get(current.getNodeName())[0]) {
-                                    subElement = subElement.getNextSibling();
+                                    if(subElement.getNextSibling() != null){
+                                        subElement = subElement.getNextSibling();
+                                    }
                                 }
                                 if (subElement.getNodeName() == params.get(current.getNodeName())[0]) { //check if that element needs reference
 //                                System.out.println(subElement.getNodeName());
