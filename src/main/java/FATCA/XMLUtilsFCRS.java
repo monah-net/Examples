@@ -121,7 +121,13 @@ public class XMLUtilsFCRS {
         return normalizedXML1.equals(normalizedXML2);
     }
 
-
+    /**
+     * Recursively writes an XML document using the XMLStreamWriter class.
+     *
+     * @param node a node object from the XML document.
+     * @param xtw  an instance of the XMLStreamWriter class that is used to write the XML document.
+     * @throws Exception if there is an error writing the XML document.
+     */
     private static void writeNode(Node node, XMLStreamWriter xtw) throws Exception {
         switch (node.getNodeType()) {
             case Node.ELEMENT_NODE:
@@ -140,6 +146,11 @@ public class XMLUtilsFCRS {
         }
     }
 
+    /**
+     * Sorts the child elements of the given element in alphabetical order.
+     * This method is called recursively for all child elements, ensuring that
+     * the entire element tree is sorted.
+     */
     private static void sortElements(Document doc) {
         NodeList nodes = doc.getElementsByTagName("*");
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -148,6 +159,10 @@ public class XMLUtilsFCRS {
         }
     }
 
+    /**
+     * Recursively sorts the children of the given element by their tag name.
+     * This method will sort all child elements of the given element, including their own children.
+     */
     private static void sortChildren(Element element) {
         List<Element> children = new ArrayList<>();
         NodeList nodes = element.getChildNodes();
@@ -164,6 +179,11 @@ public class XMLUtilsFCRS {
         }
     }
 
+    /**
+     * Sorts the attributes of each element in the given document in alphabetical order by attribute name.
+     *
+     * @param doc The Document object to sort attributes for.
+     */
     private static void sortAttributes(Document doc) {
         NodeList nodes = doc.getElementsByTagName("*");
         for (int i = 0; i < nodes.getLength(); i++) {
@@ -172,6 +192,11 @@ public class XMLUtilsFCRS {
         }
     }
 
+    /**
+     * Sorts the attributes of the given element in alphabetical order by attribute name.
+     *
+     * @param element The element whose attributes should be sorted.
+     */
     private static void sortAttribs(Element element) {
         List<Attr> attributes = new ArrayList<>();
         for (int i = 0; i < element.getAttributes().getLength(); i++) {
@@ -183,6 +208,14 @@ public class XMLUtilsFCRS {
         }
     }
 
+    /**
+     * The method linearizeXML takes a file path of an XML file as an input and returns a linearized XML string.
+     * The method uses the DocumentBuilderFactory, DocumentBuilder, TransformerFactory, and Transformer classes to read the XML file and output the linearized string.
+     *
+     * @param filePath a string representing the path to the XML file
+     * @return a string representing the linearized XML
+     * @throws Exception if there is an error reading or parsing the XML file, or if an error occurs while linearizing the XML
+     */
     private static String linearizeXML(String filePath) throws Exception {
         // Read the XML file
         File file = new File(filePath);
