@@ -34,9 +34,11 @@ import java.util.List;
 
 public class XMLUtilsFCRS {
     public static void main(String[] args) throws Exception {
-        String inputXMLfile1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased.xml";
-        String inputXMLfile2 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_LineriasedUPD.xml";
-        System.out.println(compareXML(inputXMLfile1, inputXMLfile2));
+//        String inputXMLfile1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased.xml";
+//        String inputXMLfile2 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_LineriasedUPD.xml";
+//        System.out.println(compareXML(inputXMLfile1, inputXMLfile2));
+        writeXMLtoFile(linearizeXML("/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased.xml"),"/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased111.xml");
+
     }
 
     /**
@@ -229,7 +231,7 @@ public class XMLUtilsFCRS {
         transformer.setOutputProperty(OutputKeys.INDENT, "no");
         StringWriter writer = new StringWriter();
         transformer.transform(new DOMSource(doc), new StreamResult(writer));
-        return writer.getBuffer().toString();
+        return writer.getBuffer().toString().replaceAll(">\\s*\n\\s*<", "><");
     }
 
     /**
