@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<AEOIUKSubmissionFIReport xmlns="http://hmrc.gov.uk/AEOIUKSubmissionFIReport" xmlns:iso="urn:oecd:ties:isofatcatypes:v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hmrc.gov.uk/AEOIUKSubmissionFIReport file:///E:/Users/osolodovnikov/xml_tests/UK_Schema/uk_aeoi_submission_v2.0.xsd" SchemaVersion="0">
+<AEOIUKSubmissionFIReport SchemaVersion="0" xmlns="http://hmrc.gov.uk/AEOIUKSubmissionFIReport" xmlns:iso="urn:oecd:ties:isofatcatypes:v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hmrc.gov.uk/AEOIUKSubmissionFIReport file:///E:/Users/osolodovnikov/xml_tests/UK_Schema/uk_aeoi_submission_v2.0.xsd">
 	<MessageData>
 		<MessageCategory>NewSubmission</MessageCategory>
 		<XMLTimeStamp>2021-07-15T11:30:00</XMLTimeStamp>
@@ -18,42 +18,6 @@
 			<ThresholdInd>Yes</ThresholdInd>
 			<InsuranceElection>Yes</InsuranceElection>
 			<DormantAccElection>Yes</DormantAccElection>
-			<AccountData>
-				<AccountAction>
-					<AccountRef>12345678902021071511300000.1</AccountRef>
-					<Action>New</Action>
-				</AccountAction>
-				<AccountIdentifier>GB7630006000011234567890008</AccountIdentifier>
-				<AccountBalance currCode="GBP">9700</AccountBalance>
-				<UndocumentedAccountInd>1</UndocumentedAccountInd>
-				<PaymentData>
-					<PaymentCode>00</PaymentCode>
-					<PaymentAmount currCode="GBP">13.02</PaymentAmount>
-				</PaymentData>
-				<AccountHolderType>Reportable Person (Individual)</AccountHolderType>
-				<Person>
-					<FirstName>Manuel</FirstName>
-					<LastName>Bird</LastName>
-					<Address>
-						<City>a</City>
-						<CountryCode>AF</CountryCode>
-					</Address>
-					<HolderTaxInfo>
-						<TIN issuedBy="ES">377944332</TIN>
-						<TIN issuedBy="US">377944331</TIN>
-						<TIN issuedBy="UA">377944333</TIN>
-						<TIN issuedBy="GB">377944334</TIN>
-						<TIN issuedBy="FR">377944335</TIN>
-						<ResCountryCode>GB</ResCountryCode>
-					</HolderTaxInfo>
-					<BirthInfo>
-						<BirthDate>1980-01-07</BirthDate>
-						<CountryInfo>
-							<BirthCountryCode>DK</BirthCountryCode>
-						</CountryInfo>
-					</BirthInfo>
-				</Person>
-			</AccountData>
 			<AccountData>
 				<AccountAction>
 					<AccountRef>12345678902021071511300000.2</AccountRef>
@@ -336,11 +300,9 @@
 					</HolderInfo>
 					<ControllingPerson>
 						<Person>
-							<FirstName>
-								First Name1
+							<FirstName>First Name1
 							</FirstName>
-							<LastName>
-								Last name1
+							<LastName>Last name1
 							</LastName>
 							<Address>
 								<City>Paris1</City>
@@ -362,11 +324,9 @@
 					</ControllingPerson>
 					<ControllingPerson>
 						<Person>
-							<FirstName>
-								First Name2
+							<FirstName>First Name2
 							</FirstName>
-							<LastName>
-								Last name2
+							<LastName>Last name2
 							</LastName>
 							<Address>
 								<City>Paris2</City>
@@ -388,11 +348,9 @@
 					</ControllingPerson>
 					<ControllingPerson>
 						<Person>
-							<FirstName>
-								First Name
+							<FirstName>First Name
 							</FirstName>
-							<LastName>
-								Last name
+							<LastName>Last name
 							</LastName>
 							<Address>
 								<City>Paris</City>
@@ -414,11 +372,9 @@
 					</ControllingPerson>
 					<ControllingPerson>
 						<Person>
-							<FirstName>
-								First Name3
+							<FirstName>First Name3
 							</FirstName>
-							<LastName>
-								Last name3
+							<LastName>Last name3
 							</LastName>
 							<Address>
 								<City>Paris3</City>
@@ -439,6 +395,42 @@
 						</Person>
 					</ControllingPerson>
 				</Organisation>
+			</AccountData>
+			<AccountData>
+				<AccountAction>
+					<AccountRef>12345678902021071511300000.1</AccountRef>
+					<Action>New</Action>
+				</AccountAction>
+				<AccountIdentifier>GB7630006000011234567890008</AccountIdentifier>
+				<AccountBalance currCode="GBP">9700</AccountBalance>
+				<UndocumentedAccountInd>1</UndocumentedAccountInd>
+				<PaymentData>
+					<PaymentCode>00</PaymentCode>
+					<PaymentAmount currCode="GBP">13.02</PaymentAmount>
+				</PaymentData>
+				<AccountHolderType>Reportable Person (Individual)</AccountHolderType>
+				<Person>
+					<FirstName>Manuel</FirstName>
+					<LastName>Bird</LastName>
+					<Address>
+						<City>a</City>
+						<CountryCode>AF</CountryCode>
+					</Address>
+					<HolderTaxInfo>
+						<TIN issuedBy="ES">377944332</TIN>
+						<TIN issuedBy="US">377944331</TIN>
+						<TIN issuedBy="UA">377944333</TIN>
+						<TIN issuedBy="GB">377944334</TIN>
+						<TIN issuedBy="FR">377944335</TIN>
+						<ResCountryCode>GB</ResCountryCode>
+					</HolderTaxInfo>
+					<BirthInfo>
+						<BirthDate>1980-01-07</BirthDate>
+						<CountryInfo>
+							<BirthCountryCode>DK</BirthCountryCode>
+						</CountryInfo>
+					</BirthInfo>
+				</Person>
 			</AccountData>
 		</FIReturn>
 	</Submission>

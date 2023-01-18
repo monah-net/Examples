@@ -13,6 +13,7 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -29,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,14 +38,11 @@ import java.util.List;
 
 public class XMLUtilsFCRS {
     public static void main(String[] args) throws Exception {
-/*        String inputXMLfile1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased.xml";
-        String inputXMLfile2 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_LineriasedUPD.xml";
-        System.out.println(compareXML(inputXMLfile1, inputXMLfile2));
-        writeXMLtoFile(linearizeXML("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\G5ME2G.00007.ME.840202109072100000032Mb.xml"), "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\G5ME2G.00007.ME.840202109072100000032UPDMb.xml");
-        System.out.println(isWellFormed("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case3_acc_payment_difference\\origin_GB_crs_LineriasedUPD.xml"));*/
-        String file1Path = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case7_UK_valid\\origin_GB_crs_LineriasedVALID_UK.xml";
-        String xmlSchemaPath = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xsdSchemas\\UK_Schema\\uk_aeoi_submission_v2.0.xsd";
-        System.out.println(validateXMLWithSchema(file1Path, xmlSchemaPath));
+        String file2Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000GENERATED.xml";
+        String file1Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000ORIGINAL.xml";
+        linearizeXML(file1Path);
+        linearizeXML(file2Path);
+        System.out.println(compareXMLFiles(file1Path, file2Path));
     }
 
     /**
@@ -54,16 +53,17 @@ public class XMLUtilsFCRS {
      * @return true if the files are equal, false otherwise
      * @throws Exception if there is an error reading or parsing the files, or if the files are not found
      */
-    public static List<Element> compareXML(String originFilePath, String modifiedFilePath) throws Exception {
+    public static boolean compareXMLFiles(String originFilePath, String modifiedFilePath) throws Exception {
+        boolean compareXMLResultBool = true;
         // Create a single DocumentBuilderFactory and DocumentBuilder instance
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         dbFactory.setIgnoringElementContentWhitespace(true);
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
         // Read the first file
-        Document originDoc = readXMLFiletoDoc(originFilePath);
+        Document originDoc = readXMLFileToDoc(originFilePath);
         // Read the second file
-        Document modifiedDoc = readXMLFiletoDoc(originFilePath);
+        Document modifiedDoc = readXMLFileToDoc(modifiedFilePath);
 
         // Sort the elements
         sortElements(originDoc);
@@ -73,25 +73,15 @@ public class XMLUtilsFCRS {
         sortAttributes(originDoc);
         sortAttributes(modifiedDoc);
 
-        // get elements from both documents
-        List<Element> originDocElements = new ArrayList<>();
-        getElements(originDoc.getDocumentElement(), originDocElements);
+        // Output the normalized XML strings
+        String originDocNormalizedXML = normalizeXML(originDoc);
+        String modifiedDocNormalizedXML = normalizeXML(modifiedDoc);
+//        System.out.println(modifiedDocNormalizedXML);
 
-        List<Element> modifiedDocElements = new ArrayList<>();
-        getElements(modifiedDoc.getDocumentElement(), modifiedDocElements);
-
-        return originDocElements.equals(modifiedDocElements) ? originDocElements : new ArrayList<>();
+        // Compare the two normalized XML strings
+        return originDocNormalizedXML.equals(modifiedDocNormalizedXML);
     }
 
-    private static void getElements(Node node, List<Element> elements) {
-        if (node.getNodeType() == Node.ELEMENT_NODE) {
-            elements.add((Element) node);
-        }
-        NodeList nodeList = node.getChildNodes();
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            getElements(nodeList.item(i), elements);
-        }
-    }
 
     /**
      * Recursively writes an XML document using the XMLStreamWriter class.
@@ -140,11 +130,12 @@ public class XMLUtilsFCRS {
         NodeList nodes = element.getChildNodes();
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
+//            System.out.println(node.getTextContent());
             if (node instanceof Element) {
                 children.add((Element) node);
             }
         }
-        children.sort(Comparator.comparing(Element::getTagName));
+        children.sort(Comparator.comparing(Element::getTextContent));
         for (Element child : children) {
             sortChildren(child);
             element.appendChild(child);
@@ -188,12 +179,15 @@ public class XMLUtilsFCRS {
      * @return a string representing the linearized XML
      * @throws Exception if there is an error reading or parsing the XML file, or if an error occurs while linearizing the XML
      */
-    private static String linearizeXML(String filePath) throws Exception {
+
+    public static void linearizeXML(String filePath) throws Exception {
         // Read the XML file
         File file = new File(filePath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file);
+
+        // Make changes to the document here
 
         // Output the linearized XML string
         TransformerFactory tf = TransformerFactory.newInstance();
@@ -201,8 +195,11 @@ public class XMLUtilsFCRS {
         transformer.setOutputProperty(OutputKeys.INDENT, "no");
         StringWriter writer = new StringWriter();
         transformer.transform(new DOMSource(doc), new StreamResult(writer));
-        return writer.getBuffer().toString().replaceAll(">\\s*\n\\s*\\t*<", "><");
+        String linearizedXML = writer.getBuffer().toString().replaceAll(">\\s*\n\\s*<", "><");
+        // Write the changes to the original file
+        transformer.transform(new StreamSource(new StringReader(linearizedXML)), new StreamResult(file));
     }
+
 
     /**
      * Writes the given XML string to a new file at the specified path.
@@ -211,7 +208,7 @@ public class XMLUtilsFCRS {
      * @param outputFile     The path of the new file to be created.
      * @throws Exception if an error occurs while writing to the file.
      */
-    private static void writeXMLtoFile(String inputXMLString, String outputFile) throws Exception {
+    public static void writeXMLtoFile(String inputXMLString, String outputFile) throws Exception {
         // Write the linearized XML string to the new file
         FileWriter fileWriter = new FileWriter(outputFile);
         fileWriter.write(inputXMLString);
@@ -321,7 +318,8 @@ public class XMLUtilsFCRS {
             return false;
         }
     }
-    private static Document readXMLFiletoDoc(String filePath) throws Exception {
+
+    private static Document readXMLFileToDoc(String filePath) throws Exception {
         File file = new File(filePath);
         if (!file.exists() || !file.isFile()) {
             throw new FileNotFoundException("File not found: " + filePath);
@@ -344,5 +342,17 @@ public class XMLUtilsFCRS {
         }
 
         return doc;
+    }
+    private  static String normalizeXML (Document doc) throws Exception {
+        StringWriter writer = new StringWriter();
+        XMLOutputFactory xof = XMLOutputFactory.newInstance();
+        XMLStreamWriter xtw = xof.createXMLStreamWriter(writer);
+        xtw.writeStartDocument();
+        writeNode(doc.getDocumentElement(), xtw);
+        xtw.writeEndDocument();
+        xtw.flush();
+        xtw.close();
+        String normalizedXML = writer.toString();
+        return normalizedXML;
     }
 }
