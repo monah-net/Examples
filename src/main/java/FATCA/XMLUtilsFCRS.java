@@ -1,21 +1,18 @@
 package FATCA;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
 import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
-import javax.xml.stream.XMLOutputFactory;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -57,7 +54,7 @@ public class XMLUtilsFCRS {
      * @return true if the files are equal, false otherwise
      * @throws Exception if there is an error reading or parsing the files, or if the files are not found
      */
-    public static boolean compareXML(String originFilePath, String modifiedFilePath) throws Exception {
+    public static List<Element> compareXML(String originFilePath, String modifiedFilePath) throws Exception {
         // Create a single DocumentBuilderFactory and DocumentBuilder instance
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         dbFactory.setIgnoringElementContentWhitespace(true);
@@ -105,29 +102,24 @@ public class XMLUtilsFCRS {
         sortAttributes(originDoc);
         sortAttributes(modifiedDoc);
 
-        // Output the normalized XML strings
-        StringWriter writer1 = new StringWriter();
-        XMLOutputFactory xof = XMLOutputFactory.newInstance();
-        XMLStreamWriter xtw = xof.createXMLStreamWriter(writer1);
-        xtw.writeStartDocument();
-        writeNode(originDoc.getDocumentElement(), xtw);
-        xtw.writeEndDocument();
-        xtw.flush();
-        xtw.close();
-        String normalizedXML1 = writer1.toString();
+        // get elements from both documents
+        List<Element> originDocElements = new ArrayList<>();
+        getElements(originDoc.getDocumentElement(), originDocElements);
 
-        StringWriter writer2 = new StringWriter();
-        xof = XMLOutputFactory.newInstance();
-        xtw = xof.createXMLStreamWriter(writer2);
-        xtw.writeStartDocument();
-        writeNode(modifiedDoc.getDocumentElement(), xtw);
-        xtw.writeEndDocument();
-        xtw.flush();
-        xtw.close();
-        String normalizedXML2 = writer2.toString();
+        List<Element> modifiedDocElements = new ArrayList<>();
+        getElements(modifiedDoc.getDocumentElement(), modifiedDocElements);
 
-        // Compare the two normalized XML strings
-        return normalizedXML1.equals(normalizedXML2);
+        return originDocElements.equals(modifiedDocElements) ? originDocElements : new ArrayList<>();
+    }
+
+    private static void getElements(Node node, List<Element> elements) {
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            elements.add((Element) node);
+        }
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            getElements(nodeList.item(i), elements);
+        }
     }
 
     /**
@@ -238,7 +230,7 @@ public class XMLUtilsFCRS {
         transformer.setOutputProperty(OutputKeys.INDENT, "no");
         StringWriter writer = new StringWriter();
         transformer.transform(new DOMSource(doc), new StreamResult(writer));
-        return writer.getBuffer().toString().replaceAll(">\\s*\n\\s*<", "><");
+        return writer.getBuffer().toString().replaceAll(">\\s*\n\\s*\\t*<", "><");
     }
 
     /**
