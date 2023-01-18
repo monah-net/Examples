@@ -1,17 +1,20 @@
 package FATCA;
 
-import org.w3c.dom.Attr;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.OutputKeys;
@@ -23,8 +26,10 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -34,11 +39,14 @@ import java.util.List;
 
 public class XMLUtilsFCRS {
     public static void main(String[] args) throws Exception {
-//        String inputXMLfile1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased.xml";
-//        String inputXMLfile2 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_LineriasedUPD.xml";
-//        System.out.println(compareXML(inputXMLfile1, inputXMLfile2));
-        writeXMLtoFile(linearizeXML("/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased.xml"),"/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased111.xml");
-
+/*        String inputXMLfile1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_Lineriased.xml";
+        String inputXMLfile2 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case3_acc_payment_difference/origin_GB_crs_LineriasedUPD.xml";
+        System.out.println(compareXML(inputXMLfile1, inputXMLfile2));
+        writeXMLtoFile(linearizeXML("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\G5ME2G.00007.ME.840202109072100000032Mb.xml"), "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\G5ME2G.00007.ME.840202109072100000032UPDMb.xml");
+        System.out.println(isWellFormed("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case3_acc_payment_difference\\origin_GB_crs_LineriasedUPD.xml"));*/
+        String file1Path = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case7_UK_valid\\origin_GB_crs_LineriasedVALID_UK.xml";
+        String xmlSchemaPath = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xsdSchemas\\UK_Schema\\uk_aeoi_submission_v2.0.xsd";
+        System.out.println(validateXMLWithSchema(file1Path,xmlSchemaPath));
     }
 
     /**
@@ -97,7 +105,6 @@ public class XMLUtilsFCRS {
         sortAttributes(originDoc);
         sortAttributes(modifiedDoc);
 
-        // Output
         // Output the normalized XML strings
         StringWriter writer1 = new StringWriter();
         XMLOutputFactory xof = XMLOutputFactory.newInstance();
@@ -237,14 +244,14 @@ public class XMLUtilsFCRS {
     /**
      * Writes the given XML string to a new file at the specified path.
      *
-     * @param linearizedXML The XML string to write to the file.
-     * @param outputFile    The path of the new file to be created.
+     * @param inputXMLString The XML string to write to the file.
+     * @param outputFile     The path of the new file to be created.
      * @throws Exception if an error occurs while writing to the file.
      */
-    private static void writeXMLtoFile(String linearizedXML, String outputFile) throws Exception {
+    private static void writeXMLtoFile(String inputXMLString, String outputFile) throws Exception {
         // Write the linearized XML string to the new file
         FileWriter fileWriter = new FileWriter(outputFile);
-        fileWriter.write(linearizedXML);
+        fileWriter.write(inputXMLString);
         fileWriter.flush();
         fileWriter.close();
     }
@@ -258,7 +265,7 @@ public class XMLUtilsFCRS {
      * @throws SAXException if an error occurs while parsing the schema
      * @throws IOException  if an error occurs while reading the XML file
      */
-    private static List<String> validateXMLWithSchema(String xmlFilePath, String schemaFilePath) throws Exception {
+    public static List<String> validateXMLWithSchema(String xmlFilePath, String schemaFilePath) throws Exception {
         List<String> errors = new ArrayList<>();
         // Create a SchemaFactory capable of understanding WXS schemas
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -294,4 +301,61 @@ public class XMLUtilsFCRS {
         return errors;
     }
 
+    public static String replaceInTags(String inputFilePath, String oldChars, String newChars) {
+        StringBuilder output = new StringBuilder();
+        File inputFile = new File(inputFilePath);
+        if (!inputFile.exists()) {
+            output.append("Error: input file does not exist");
+            return output.toString();
+        }
+        String[] oldCharsArray = oldChars.split("\\|");
+        String[] newCharsArray = newChars.split("\\|");
+        if (oldCharsArray.length != newCharsArray.length) {
+            output.append("Error: oldChars and newChars must have the same number of delimiters");
+            return output.toString();
+        }
+        boolean inTag = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
+            int c;
+            while ((c = reader.read()) != -1) {
+                char ch = (char) c;
+                // Check if current character is '<', if true then set 'inTag' flag to true
+                if (ch == '<') {
+                    inTag = true;
+                }
+                // Check if current character is '>', if true then set 'inTag' flag to false
+                else if (ch == '>') {
+                    inTag = false;
+                }
+                // Check if current character is in oldChars and 'inTag' flag is false, if true then replace it with newChars
+                else if (!inTag) {
+                    for (int i = 0; i < oldCharsArray.length; i++) {
+                        if (ch == oldCharsArray[i].charAt(0)) {
+                            ch = newCharsArray[i].charAt(0);
+                            break;
+                        }
+                    }
+                }
+                // Append the current character to output
+                output.append(ch);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // return output String
+        return output.toString();
+    }
+
+    public static boolean isWellFormed(String filePath) {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setValidating(false);
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            builder.parse(new File(filePath));
+            return true;
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            return false;
+        }
+    }
 }
