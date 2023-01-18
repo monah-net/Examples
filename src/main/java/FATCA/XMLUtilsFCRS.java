@@ -43,7 +43,7 @@ public class XMLUtilsFCRS {
         System.out.println(isWellFormed("C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case3_acc_payment_difference\\origin_GB_crs_LineriasedUPD.xml"));*/
         String file1Path = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case7_UK_valid\\origin_GB_crs_LineriasedVALID_UK.xml";
         String xmlSchemaPath = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\xsdSchemas\\UK_Schema\\uk_aeoi_submission_v2.0.xsd";
-        System.out.println(validateXMLWithSchema(file1Path,xmlSchemaPath));
+        System.out.println(validateXMLWithSchema(file1Path, xmlSchemaPath));
     }
 
     /**
@@ -61,38 +61,9 @@ public class XMLUtilsFCRS {
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
         // Read the first file
-        File originFile = new File(originFilePath);
-        if (!originFile.exists() || !originFile.isFile()) {
-            throw new FileNotFoundException("File not found: " + originFilePath);
-        }
-        if (originFile.length() == 0) {
-            throw new Exception("First file is empty: " + originFilePath);
-        }
-        Document originDoc;
-        try {
-            originDoc = dBuilder.parse(originFile);
-        } catch (SAXException e) {
-            throw new Exception("Error parsing first XML file: " + e.getMessage());
-        } catch (IOException e) {
-            throw new Exception("Error reading first XML file: " + e.getMessage());
-        }
-
+        Document originDoc = readXMLFiletoDoc(originFilePath);
         // Read the second file
-        File modifiedFile = new File(modifiedFilePath);
-        if (!modifiedFile.exists() || !modifiedFile.isFile()) {
-            throw new FileNotFoundException("File not found: " + modifiedFilePath);
-        }
-        if (modifiedFile.length() == 0) {
-            throw new Exception("Second file is empty: " + modifiedFilePath);
-        }
-        Document modifiedDoc;
-        try {
-            modifiedDoc = dBuilder.parse(modifiedFile);
-        } catch (SAXException e) {
-            throw new Exception("Error parsing second XML file: " + e.getMessage());
-        } catch (IOException e) {
-            throw new Exception("Error reading second XML file: " + e.getMessage());
-        }
+        Document modifiedDoc = readXMLFiletoDoc(originFilePath);
 
         // Sort the elements
         sortElements(originDoc);
@@ -349,5 +320,29 @@ public class XMLUtilsFCRS {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             return false;
         }
+    }
+    private static Document readXMLFiletoDoc(String filePath) throws Exception {
+        File file = new File(filePath);
+        if (!file.exists() || !file.isFile()) {
+            throw new FileNotFoundException("File not found: " + filePath);
+        }
+        if (file.length() == 0) {
+            throw new Exception("File is empty: " + filePath);
+        }
+
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        dbFactory.setIgnoringElementContentWhitespace(true);
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+        Document doc;
+        try {
+            doc = dBuilder.parse(file);
+        } catch (SAXException e) {
+            throw new Exception("Error parsing XML file: " + e.getMessage());
+        } catch (IOException e) {
+            throw new Exception("Error reading XML file: " + e.getMessage());
+        }
+
+        return doc;
     }
 }
