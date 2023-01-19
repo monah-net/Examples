@@ -37,13 +37,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class XMLUtilsFCRS {
-    public static void main(String[] args) throws Exception {
-        String file2Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000GENERATED.xml";
-        String file1Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000ORIGINAL.xml";
-        linearizeXML(file1Path);
-        linearizeXML(file2Path);
-        System.out.println(compareXMLFiles(file1Path, file2Path));
-    }
+//    public static void main(String[] args) throws Exception {
+//        String file2Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000GENERATED.xml";
+//        String file1Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000ORIGINAL.xml";
+//        linearizeXML(file1Path);
+//        linearizeXML(file2Path);
+//        System.out.println(compareXMLFiles(file1Path, file2Path));
+//    }
 
     /**
      * Compares two XML files and returns true if they are equal, false otherwise.
@@ -55,11 +55,6 @@ public class XMLUtilsFCRS {
      */
     public static boolean compareXMLFiles(String originFilePath, String modifiedFilePath) throws Exception {
         boolean compareXMLResultBool = true;
-        // Create a single DocumentBuilderFactory and DocumentBuilder instance
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        dbFactory.setIgnoringElementContentWhitespace(true);
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
         // Read the first file
         Document originDoc = readXMLFileToDoc(originFilePath);
         // Read the second file
@@ -130,12 +125,11 @@ public class XMLUtilsFCRS {
         NodeList nodes = element.getChildNodes();
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
-//            System.out.println(node.getTextContent());
             if (node instanceof Element) {
                 children.add((Element) node);
             }
         }
-        children.sort(Comparator.comparing(Element::getTextContent));
+        children.sort(Comparator.comparing(Element::getTagName).thenComparing(Element::getTextContent));
         for (Element child : children) {
             sortChildren(child);
             element.appendChild(child);

@@ -52,8 +52,8 @@ public class XMLUtilsFCRSTest {
     }
     @Test
     public void testCompareXML_DifferentFilescase9() throws Exception{
-        String file1Path = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case9DiffTIN\\origin_GB_crs_original_case9.xml";
-        String file2Path = "C:\\Users\\osolodovnikov\\IdeaProjects\\Examples\\src\\test\\files\\comparator\\case9DiffTIN\\origin_GB_crs_original_case9_p2.xml";
+        String file1Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case9DiffTIN/origin_GB_crs_original_case9.xml";
+        String file2Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case9DiffTIN/origin_GB_crs_original_case9_p2.xml";
         assertFalse(XMLUtilsFCRS.compareXMLFiles(file1Path,file2Path));
     }
     @Test (expected = Exception.class)
