@@ -28,7 +28,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -37,13 +36,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public class XMLUtilsFCRS {
-//    public static void main(String[] args) throws Exception {
-//        String file2Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000GENERATED.xml";
-//        String file1Path = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case10_orignalAndGenericCV10/12345678902021112311270000ORIGINAL.xml";
-//        linearizeXML(file1Path);
-//        linearizeXML(file2Path);
-//        System.out.println(compareXMLFiles(file1Path, file2Path));
-//    }
+    public static void main(String[] args) {
+        String filetest1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case11_replace_chars1/12345678902021112311270000ORIGINAL.xml";
+        System.out.println(replaceInTags(filetest1,"*|#|!","T|TE|TEST"));
+
+    }
 
     /**
      * Compares two XML files and returns true if they are equal, false otherwise.
@@ -53,11 +50,18 @@ public class XMLUtilsFCRS {
      * @return true if the files are equal, false otherwise
      * @throws Exception if there is an error reading or parsing the files, or if the files are not found
      */
-    public static boolean compareXMLFiles(String originFilePath, String modifiedFilePath) throws Exception {
+    public static boolean compareXMLFilesBoolean(String originFilePath, String modifiedFilePath) throws Exception {
         boolean compareXMLResultBool = true;
-        // Read the first file
+        //Linearize input xml's and save as with additional text Temp in their names
+        String originFilePathTemp = originFilePath.replace(".xml", "Temp.xml");
+        String modifiedFilePathTemp = modifiedFilePath.replace(".xml", "Temp.xml");
+
+        linearizeXML(originFilePath, originFilePathTemp);
+        linearizeXML(modifiedFilePath, modifiedFilePathTemp);
+
+        // Read the origin file
         Document originDoc = readXMLFileToDoc(originFilePath);
-        // Read the second file
+        // Read the modified file
         Document modifiedDoc = readXMLFileToDoc(modifiedFilePath);
 
         // Sort the elements
@@ -71,36 +75,51 @@ public class XMLUtilsFCRS {
         // Output the normalized XML strings
         String originDocNormalizedXML = normalizeXML(originDoc);
         String modifiedDocNormalizedXML = normalizeXML(modifiedDoc);
-//        System.out.println(modifiedDocNormalizedXML);
+        // Deletion temp files
+        deleteFile(originFilePathTemp);
+        deleteFile(modifiedFilePathTemp);
 
         // Compare the two normalized XML strings
         return originDocNormalizedXML.equals(modifiedDocNormalizedXML);
     }
 
-
     /**
-     * Recursively writes an XML document using the XMLStreamWriter class.
+     * Reads an XML file from the specified file path and returns a org.w3c.dom.Document object.
      *
-     * @param node a node object from the XML document.
-     * @param xtw  an instance of the XMLStreamWriter class that is used to write the XML document.
-     * @throws Exception if there is an error writing the XML document.
+     * @param filePath the path of the file to be read.
+     * @return a org.w3c.dom.Document object representing the XML file.
+     * @throws Exception if the file is not found, is empty, or an error occurs while parsing or reading the file.
      */
-    private static void writeNode(Node node, XMLStreamWriter xtw) throws Exception {
-        switch (node.getNodeType()) {
-            case Node.ELEMENT_NODE:
-                xtw.writeStartElement(node.getNodeName());
-                NodeList children = node.getChildNodes();
-                for (int i = 0; i < children.getLength(); i++) {
-                    writeNode(children.item(i), xtw);
-                }
-                xtw.writeEndElement();
-                break;
-            case Node.TEXT_NODE:
-                xtw.writeCharacters(node.getTextContent());
-                break;
-            default:
-                break;
+    private static Document readXMLFileToDoc(String filePath) throws Exception {
+        // Create a File object for the file to be read
+        File file = new File(filePath);
+        // Check if the file exists and is a file
+        if (!file.exists() || !file.isFile()) {
+            throw new FileNotFoundException("File not found: " + filePath);
         }
+        // Check if the file is empty
+        if (file.length() == 0) {
+            throw new Exception("File is empty: " + filePath);
+        }
+
+        // Create a DocumentBuilderFactory object
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        // Set the factory to ignore whitespace in the XML document
+        dbFactory.setIgnoringElementContentWhitespace(true);
+        // Create a DocumentBuilder object
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+        Document doc;
+        try {
+            // Parse the file and create a Document object
+            doc = dBuilder.parse(file);
+        } catch (SAXException e) {
+            throw new Exception("Error parsing XML file: " + e.getMessage());
+        } catch (IOException e) {
+            throw new Exception("Error reading XML file: " + e.getMessage());
+        }
+        // Return the Document object
+        return doc;
     }
 
     /**
@@ -117,24 +136,35 @@ public class XMLUtilsFCRS {
     }
 
     /**
-     * Recursively sorts the children of the given element by their tag name.
+     * Recursively sorts the children of the given element by their tag name and context.
      * This method will sort all child elements of the given element, including their own children.
+     *
+     * @param element the element whose children will be sorted.
      */
     private static void sortChildren(Element element) {
+        // Create a list to store the children elements
         List<Element> children = new ArrayList<>();
+        // Get the list of child nodes of the element
         NodeList nodes = element.getChildNodes();
+        // Iterate through the list of child nodes
         for (int i = 0; i < nodes.getLength(); i++) {
             Node node = nodes.item(i);
+            // Check if the current node is an Element
             if (node instanceof Element) {
                 children.add((Element) node);
             }
         }
+        // Sort the children elements based on their tag name and text content
         children.sort(Comparator.comparing(Element::getTagName).thenComparing(Element::getTextContent));
+        // Iterate through the sorted children elements
         for (Element child : children) {
+            // Recursively sort the children of this child element
             sortChildren(child);
+            // Append the child element back to the original element
             element.appendChild(child);
         }
     }
+
 
     /**
      * Sorts the attributes of each element in the given document in alphabetical order by attribute name.
@@ -166,20 +196,44 @@ public class XMLUtilsFCRS {
     }
 
     /**
-     * The method linearizeXML takes a file path of an XML file as an input and returns a linearized XML string.
-     * The method uses the DocumentBuilderFactory, DocumentBuilder, TransformerFactory, and Transformer classes to read the XML file and output the linearized string.
+     * Recursively writes an XML document using the XMLStreamWriter class.
      *
-     * @param filePath a string representing the path to the XML file
-     * @return a string representing the linearized XML
-     * @throws Exception if there is an error reading or parsing the XML file, or if an error occurs while linearizing the XML
+     * @param node a node object from the XML document.
+     * @param xtw  an instance of the XMLStreamWriter class that is used to write the XML document.
+     * @throws Exception if there is an error writing the XML document.
+     */
+    private static void writeNode(Node node, XMLStreamWriter xtw) throws Exception {
+        switch (node.getNodeType()) {
+            case Node.ELEMENT_NODE:
+                xtw.writeStartElement(node.getNodeName());
+                NodeList children = node.getChildNodes();
+                for (int i = 0; i < children.getLength(); i++) {
+                    writeNode(children.item(i), xtw);
+                }
+                xtw.writeEndElement();
+                break;
+            case Node.TEXT_NODE:
+                xtw.writeCharacters(node.getTextContent());
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Linearize the XML content in the input file and write the result to the output file.
+     *
+     * @param inputFilePath  the path of the input file containing the XML content
+     * @param outputFilePath the path of the output file to write the linearized XML content
+     * @throws Exception if any error occurs while reading, parsing or writing the file.
      */
 
-    public static void linearizeXML(String filePath) throws Exception {
+    private static void linearizeXML(String inputFilePath, String outputFilePath) throws Exception {
         // Read the XML file
-        File file = new File(filePath);
+        File inputFile = new File(inputFilePath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-        Document doc = dBuilder.parse(file);
+        Document doc = dBuilder.parse(inputFile);
 
         // Make changes to the document here
 
@@ -190,24 +244,56 @@ public class XMLUtilsFCRS {
         StringWriter writer = new StringWriter();
         transformer.transform(new DOMSource(doc), new StreamResult(writer));
         String linearizedXML = writer.getBuffer().toString().replaceAll(">\\s*\n\\s*<", "><");
-        // Write the changes to the original file
-        transformer.transform(new StreamSource(new StringReader(linearizedXML)), new StreamResult(file));
+        // Write the changes to the output file
+        File outputFile = new File(outputFilePath);
+        transformer.transform(new StreamSource(new StringReader(linearizedXML)), new StreamResult(outputFile));
     }
 
+    /**
+     * Normalize the XML content of the given Document object.
+     *
+     * @param doc the Document object containing the XML content
+     * @return a string representing the normalized XML content
+     * @throws Exception if any error occurs while normalizing the XML
+     */
+    private static String normalizeXML(Document doc) throws Exception {
+        // Create a StringWriter to write the normalized XML to
+        StringWriter writer = new StringWriter();
+        // Create an XMLOutputFactory to write the XML
+        XMLOutputFactory xof = XMLOutputFactory.newInstance();
+        // Create an XMLStreamWriter to write the XML to the StringWriter
+        XMLStreamWriter xtw = xof.createXMLStreamWriter(writer);
+        // Write the start of the document
+        xtw.writeStartDocument();
+        // Write the document element and all its children
+        writeNode(doc.getDocumentElement(), xtw);
+        // Write the end of the document
+        xtw.writeEndDocument();
+        // Flush the writer
+        xtw.flush();
+        // Close the writer
+        xtw.close();
+        // Get the normalized XML as a string
+        String normalizedXML = writer.toString();
+        return normalizedXML;
+    }
 
     /**
-     * Writes the given XML string to a new file at the specified path.
+     * Delete a file.
      *
-     * @param inputXMLString The XML string to write to the file.
-     * @param outputFile     The path of the new file to be created.
-     * @throws Exception if an error occurs while writing to the file.
+     * @param filePath the path of the file to delete
+     * @return true if the file was successfully deleted, false otherwise
      */
-    public static void writeXMLtoFile(String inputXMLString, String outputFile) throws Exception {
-        // Write the linearized XML string to the new file
-        FileWriter fileWriter = new FileWriter(outputFile);
-        fileWriter.write(inputXMLString);
-        fileWriter.flush();
-        fileWriter.close();
+    private static boolean deleteFile(String filePath) {
+        File file = new File(filePath);
+        // Check if the file exists
+        if (file.exists()) {
+            // If the file exists, attempt to delete it
+            return file.delete();
+        } else {
+            // If the file does not exist, return false
+            return false;
+        }
     }
 
     /**
@@ -255,15 +341,26 @@ public class XMLUtilsFCRS {
         return errors;
     }
 
+    /**
+     * Replace characters within tags in the input file with new characters.
+     *
+     * @param inputFilePath the path of the input file containing the text
+     * @param oldChars      a string containing the characters to be replaced, separated by '|'
+     * @param newChars      a string containing the characters to replace with, separated by '|'
+     * @return a string representing the input file with characters within tags replaced
+     */
     public static String replaceInTags(String inputFilePath, String oldChars, String newChars) {
         StringBuilder output = new StringBuilder();
         File inputFile = new File(inputFilePath);
+        // check if input file exists
         if (!inputFile.exists()) {
             output.append("Error: input file does not exist");
             return output.toString();
         }
+        // split the oldChars and newChars by '|'
         String[] oldCharsArray = oldChars.split("\\|");
         String[] newCharsArray = newChars.split("\\|");
+        // check if oldChars and newChars have the same number of delimiters
         if (oldCharsArray.length != newCharsArray.length) {
             output.append("Error: oldChars and newChars must have the same number of delimiters");
             return output.toString();
@@ -300,53 +397,28 @@ public class XMLUtilsFCRS {
         return output.toString();
     }
 
+    /**
+     * Check if the XML file is well-formed.
+     *
+     * @param filePath the path of the XML file
+     * @return true if the file is well-formed, false otherwise
+     */
     public static boolean isWellFormed(String filePath) {
         try {
+            // Create a new DocumentBuilderFactory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // Set the factory to not validate and be namespace aware
             factory.setValidating(false);
             factory.setNamespaceAware(true);
+            // Create a new DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
+            // Parse the file
             builder.parse(new File(filePath));
+            // If the file is well-formed, it will be successfully parsed and no exception will be thrown
             return true;
         } catch (ParserConfigurationException | SAXException | IOException e) {
+            // If the file is not well-formed, an exception will be thrown
             return false;
         }
-    }
-
-    private static Document readXMLFileToDoc(String filePath) throws Exception {
-        File file = new File(filePath);
-        if (!file.exists() || !file.isFile()) {
-            throw new FileNotFoundException("File not found: " + filePath);
-        }
-        if (file.length() == 0) {
-            throw new Exception("File is empty: " + filePath);
-        }
-
-        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        dbFactory.setIgnoringElementContentWhitespace(true);
-        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-        Document doc;
-        try {
-            doc = dBuilder.parse(file);
-        } catch (SAXException e) {
-            throw new Exception("Error parsing XML file: " + e.getMessage());
-        } catch (IOException e) {
-            throw new Exception("Error reading XML file: " + e.getMessage());
-        }
-
-        return doc;
-    }
-    private  static String normalizeXML (Document doc) throws Exception {
-        StringWriter writer = new StringWriter();
-        XMLOutputFactory xof = XMLOutputFactory.newInstance();
-        XMLStreamWriter xtw = xof.createXMLStreamWriter(writer);
-        xtw.writeStartDocument();
-        writeNode(doc.getDocumentElement(), xtw);
-        xtw.writeEndDocument();
-        xtw.flush();
-        xtw.close();
-        String normalizedXML = writer.toString();
-        return normalizedXML;
     }
 }
