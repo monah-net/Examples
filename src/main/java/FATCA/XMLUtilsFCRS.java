@@ -35,12 +35,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class XMLUtilsFCRS {
-//    public static void main(String[] args) {
-//        String filetest1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case11_replace_chars1/12345678902021112311270000ORIGINAL.xml";
-//        System.out.println(replaceInTags(filetest1, "*|#|!", "?|/|\\\\"));
-//
-//    }
+class XMLUtilsFCRS {
+
 
     /**
      * Compares two XML files and returns true if they are equal, false otherwise.
@@ -368,12 +364,7 @@ public class XMLUtilsFCRS {
         for (int i = 0; i < oldCharsArray.length; i++) {
             oldCharsArray[i] = Pattern.quote(oldCharsArray[i]);
         }
-        System.out.println(oldCharsArray[0]);
-        System.out.println(oldCharsArray[1]);
-        System.out.println(oldCharsArray[2]);
-        System.out.println(newCharsArray[0]);
-        System.out.println(newCharsArray[1]);
-        System.out.println(newCharsArray[2]);
+
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -399,7 +390,7 @@ public class XMLUtilsFCRS {
     }
 
     /**
-     * Replace text at XML nodes
+     * Replace text inside XML nodes
      *
      * @param nodeList
      * @param oldCharsArray
