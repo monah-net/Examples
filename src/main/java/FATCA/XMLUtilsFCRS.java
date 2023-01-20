@@ -17,6 +17,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -24,23 +25,22 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class XMLUtilsFCRS {
-    public static void main(String[] args) {
-        String filetest1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case11_replace_chars1/12345678902021112311270000ORIGINAL.xml";
-        System.out.println(replaceInTags(filetest1,"*|#|!","T|TE|TEST"));
-
-    }
+//    public static void main(String[] args) {
+//        String filetest1 = "/Users/olegsolodovnikov/IdeaProjects/Examples/src/test/files/comparator/case11_replace_chars1/12345678902021112311270000ORIGINAL.xml";
+//        System.out.println(replaceInTags(filetest1, "*|#|!", "?|/|\\\\"));
+//
+//    }
 
     /**
      * Compares two XML files and returns true if they are equal, false otherwise.
@@ -274,8 +274,7 @@ public class XMLUtilsFCRS {
         // Close the writer
         xtw.close();
         // Get the normalized XML as a string
-        String normalizedXML = writer.toString();
-        return normalizedXML;
+        return writer.toString();
     }
 
     /**
@@ -365,37 +364,62 @@ public class XMLUtilsFCRS {
             output.append("Error: oldChars and newChars must have the same number of delimiters");
             return output.toString();
         }
-        boolean inTag = false;
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
-            int c;
-            while ((c = reader.read()) != -1) {
-                char ch = (char) c;
-                // Check if current character is '<', if true then set 'inTag' flag to true
-                if (ch == '<') {
-                    inTag = true;
-                }
-                // Check if current character is '>', if true then set 'inTag' flag to false
-                else if (ch == '>') {
-                    inTag = false;
-                }
-                // Check if current character is in oldChars and 'inTag' flag is false, if true then replace it with newChars
-                else if (!inTag) {
-                    for (int i = 0; i < oldCharsArray.length; i++) {
-                        if (ch == oldCharsArray[i].charAt(0)) {
-                            ch = newCharsArray[i].charAt(0);
-                            break;
-                        }
-                    }
-                }
-                // Append the current character to output
-                output.append(ch);
-            }
-        } catch (IOException e) {
+        // escape special characters in oldCharsArray and newCharsArray
+        for (int i = 0; i < oldCharsArray.length; i++) {
+            oldCharsArray[i] = Pattern.quote(oldCharsArray[i]);
+        }
+        System.out.println(oldCharsArray[0]);
+        System.out.println(oldCharsArray[1]);
+        System.out.println(oldCharsArray[2]);
+        System.out.println(newCharsArray[0]);
+        System.out.println(newCharsArray[1]);
+        System.out.println(newCharsArray[2]);
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(inputFile);
+
+            // replace text
+            NodeList nodeList = document.getChildNodes();
+            replaceText(nodeList, oldCharsArray, newCharsArray);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            DOMSource source = new DOMSource(document);
+            StringWriter writer = new StringWriter();
+            StreamResult result = new StreamResult(writer);
+            transformer.transform(source, result);
+            output.append(writer.toString());
+        } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
             e.printStackTrace();
         }
-        // return output String
+
         return output.toString();
     }
+
+    /**
+     * Replace text at XML nodes
+     *
+     * @param nodeList
+     * @param oldCharsArray
+     * @param newCharsArray
+     */
+
+    private static void replaceText(NodeList nodeList, String[] oldCharsArray, String[] newCharsArray) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                replaceText(node.getChildNodes(), oldCharsArray, newCharsArray);
+            } else if (node.getNodeType() == Node.TEXT_NODE) {
+                for (int j = 0; j < oldCharsArray.length; j++) {
+                    node.setTextContent(node.getTextContent().replaceAll(oldCharsArray[
+                            j], newCharsArray[j]));
+                }
+            }
+        }
+    }
+
 
     /**
      * Check if the XML file is well-formed.
