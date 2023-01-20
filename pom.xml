@@ -61,10 +61,5 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.xmlunit</groupId>
-            <artifactId>xmlunit-core</artifactId>
-            <version>2.6.4</version>
-        </dependency>
     </dependencies>
 </project>
